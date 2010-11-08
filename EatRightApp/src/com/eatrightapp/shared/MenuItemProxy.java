@@ -10,15 +10,11 @@ import com.google.gwt.requestfactory.shared.ProxyFor;
 @ProxyFor(MenuItem.class)
 interface MenuItemProxy extends EntityProxy {
 	 Long getId();
+
+	 RestaurantProxy getRestaurant();
 	 
-	String getPlacesReference();
-
-	 void setPlacesReference(String placesReference);
+	 void setRestaurant(RestaurantProxy restaurant);
 	 
-	 String getPlacesUrl();
-
-	 void setPlacesUrl(String placesUrl);
-
 	 String getItemName();
 
 	 void setItemName(String itemName);
