@@ -20,11 +20,9 @@ public class MenuItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotNull
-	private String placesReference;
-	
-	private String placesUrl;
+	private Restaurant restaurant;
 	
 	@NotNull
 	private String itemName;
@@ -68,21 +66,33 @@ public class MenuItem {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getPlacesReference() {
-		return placesReference;
+	
+	public Restaurant getRestaurant() {
+		return restaurant;
 	}
 
-	public void setPlacesReference(String placesReference) {
-		this.placesReference = placesReference;
+	public void setRestaurant(Restaurant restaurant) {
+		this.restaurant = restaurant;
 	}
 
-	public String getPlacesUrl() {
-		return placesUrl;
+	public Boolean getBreakfast() {
+		return breakfast;
 	}
 
-	public void setPlacesUrl(String placesUrl) {
-		this.placesUrl = placesUrl;
+	public Boolean getLunch() {
+		return lunch;
+	}
+
+	public Boolean getDinner() {
+		return dinner;
+	}
+
+	public Boolean getSpam() {
+		return spam;
+	}
+
+	public Boolean getInaccurate() {
+		return inaccurate;
 	}
 
 	public String getItemName() {
