@@ -18,5 +18,11 @@
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
   <source path='shared'/>
+  
+  <!-- Use ClientFactoryImpl by default -->
+  <!-- Other types are: class="com.eatrightapp.client.ui.mobile.ClientFactoryImpl" -->
+  <replace-with class="com.eatrightapp.client.ui.web.ClientFactoryImpl">
+  	<when-type-is class="com.eatrightapp.client.ClientFactory"/>
+  </replace-with>
 
 </module>
