@@ -12,7 +12,7 @@ import com.google.gwt.requestfactory.shared.Service;
 public interface EatRightAppUserRequest extends RequestContext {
 	Request<Long> countUsers();
 	Request<Long> countModerators();
-	Request<List<EatRightAppUserProxy>> findUsers(String email, String nickname, int firstResult, int maxResults);
+	Request<List<EatRightAppUserProxy>> findUsersByEmailOrNickname(String email, String nickname, int firstResult, int maxResults);
 	InstanceRequest<EatRightAppUserProxy, Void> persist();
 	InstanceRequest<EatRightAppUserProxy, Void> remove();
 }

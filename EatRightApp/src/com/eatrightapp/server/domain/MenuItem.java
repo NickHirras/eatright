@@ -12,8 +12,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import com.google.appengine.api.users.User;
-
 @Entity
 public class MenuItem {
 
@@ -50,7 +48,7 @@ public class MenuItem {
 	private Long ratingsCount;
 	
 	@NotNull
-	private User modifiedBy;
+	private EatRightAppUser modifiedBy;
 	
 	@NotNull
 	private Date modifiedDate;
@@ -183,11 +181,11 @@ public class MenuItem {
 		this.ratingsCount = ratingsCount;
 	}
 
-	public User getModifiedBy() {
+	public EatRightAppUser getModifiedBy() {
 		return modifiedBy;
 	}
 
-	public void setModifiedBy(User modifiedBy) {
+	public void setModifiedBy(EatRightAppUser modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

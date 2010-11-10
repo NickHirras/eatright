@@ -3,7 +3,6 @@ package com.eatrightapp.shared;
 import java.util.Date;
 
 import com.eatrightapp.server.domain.MenuItem;
-import com.google.appengine.api.users.User;
 import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.ProxyFor;
 
@@ -59,9 +58,9 @@ interface MenuItemProxy extends EntityProxy {
 
 	 void setRatingsCount(Long ratingsCount);
 
-	 User getModifiedBy();
+	 EatRightAppUserProxy getModifiedBy();
 
-	 void setModifiedBy(User modifiedBy);
+	 void setModifiedBy(EatRightAppUserProxy modifiedBy);
 
 	 Date getModifiedDate();
 

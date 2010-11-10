@@ -9,13 +9,13 @@ public class UserAccountsPlace extends Place {
 		@Override
 		public UserAccountsPlace getPlace(String token) {
 			// TODO Auto-generated method stub.  Not yet implemented.
-			throw new Error("UserAccountsPlace.getPlace: not yet implemented.");
+			return null;
 		}
 
 		@Override
 		public String getToken(UserAccountsPlace place) {
 			// TODO Auto-generated method stub.  Not yet implemented.
-			throw new Error("UserAccountsPlace.getToken: not yet implemented.");			
+			return null;			
 		}
 		
 	}

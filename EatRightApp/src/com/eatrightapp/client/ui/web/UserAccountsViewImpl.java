@@ -10,7 +10,7 @@ public class UserAccountsViewImpl extends Composite implements UserAccountsView 
 	private static UserAccountsViewImplUiBinder uiBinder = GWT.create(UserAccountsViewImplUiBinder.class);
 	private Presenter presenter;
 	
-	interface UserAccountsViewImplUiBinder extends UiBinder {
+	interface UserAccountsViewImplUiBinder extends UiBinder<Widget, UserAccountsViewImpl> {
 	}
 	
 	public UserAccountsViewImpl() {

@@ -11,7 +11,10 @@
   <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
 
   <!-- Other module inherits                                      -->
-
+  <inherits name="com.google.gwt.activity.Activity"/>
+  <inherits name="com.google.gwt.place.Place"/>  
+  <inherits name="com.google.gwt.requestfactory.RequestFactory"/>
+  
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.eatrightapp.client.EatRightApp'/>
 

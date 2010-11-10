@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import com.google.appengine.api.users.User;
-
 @Entity
 public class Restaurant {
 
@@ -34,7 +32,7 @@ public class Restaurant {
 	
 	private String zip;
 	
-	private User modifiedBy;
+	private EatRightAppUser modifiedBy;
 	
 	private Date modifiedDate;
 	
@@ -104,11 +102,11 @@ public class Restaurant {
 		this.zip = zip;
 	}
 
-	public User getModifiedBy() {
+	public EatRightAppUser getModifiedBy() {
 		return modifiedBy;
 	}
 
-	public void setModifiedBy(User modifiedBy) {
+	public void setModifiedBy(EatRightAppUser modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 

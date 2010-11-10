@@ -3,7 +3,6 @@ package com.eatrightapp.shared;
 import java.util.Date;
 
 import com.eatrightapp.server.domain.Restaurant;
-import com.google.appengine.api.users.User;
 import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.ProxyFor;
 
@@ -40,9 +39,9 @@ interface RestaurantProxy extends EntityProxy {
 
 	void setZip(String zip);
 
-	User getModifiedBy();
+	EatRightAppUserProxy getModifiedBy();
 
-	void setModifiedBy(User modifiedBy);
+	void setModifiedBy(EatRightAppUserProxy modifiedBy);
 
 	Date getModifiedDate();
 

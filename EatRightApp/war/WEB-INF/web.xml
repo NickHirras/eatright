@@ -6,19 +6,18 @@
 <web-app>
   
   <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.eatrightapp.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/eatrightapp/greet</url-pattern>
-  </servlet-mapping>
+<!--  <servlet>-->
+<!--    <servlet-name>greetServlet</servlet-name>-->
+<!--    <servlet-class>com.eatrightapp.server.GreetingServiceImpl</servlet-class>-->
+<!--  </servlet>-->
+<!--  -->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>greetServlet</servlet-name>-->
+<!--    <url-pattern>/eatrightapp/greet</url-pattern>-->
+<!--  </servlet-mapping>-->
   
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
     <welcome-file>EatRightApp.html</welcome-file>
   </welcome-file-list>
 
