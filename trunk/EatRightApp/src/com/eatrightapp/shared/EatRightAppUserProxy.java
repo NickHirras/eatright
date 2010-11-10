@@ -1,7 +1,6 @@
 package com.eatrightapp.shared;
 
 import com.eatrightapp.server.domain.EatRightAppUser;
-import com.google.appengine.api.users.User;
 import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.ProxyFor;
 
@@ -9,9 +8,21 @@ import com.google.gwt.requestfactory.shared.ProxyFor;
 interface EatRightAppUserProxy extends EntityProxy {
 	Long getId();
 
-	User getUser();
+	String getUserId();
 
-	void setUser(User user);
+	void setUserId(String userId);
+	
+	String getEmail();
+
+	void setEmail(String email);
+	
+	String getNickname();
+
+	void setNickname(String nickname);
+
+	String getFederatedIdentity();
+
+	void setFederatedIdentity(String federatedIdentity);
 
 	String getComment();
 

@@ -21,7 +21,7 @@ public class EatRightApp implements EntryPoint {
     private Place userAccountsPlace = new UserAccountsPlace();
     private SimplePanel appWidget = new SimplePanel();
 
-    public void onModuleLoad() {
+    public void onModuleLoad() { 
         ClientFactory clientFactory = GWT.create(ClientFactory.class);
         EventBus eventBus = clientFactory.getEventBus();
         PlaceController placeController = clientFactory.getPlaceController();
@@ -32,7 +32,7 @@ public class EatRightApp implements EntryPoint {
         activityManager.setDisplay(appWidget);
 
         // Start PlaceHistoryHandler with our PlaceHistoryMapper
-        AppPlaceHistoryMapper historyMapper= GWT.create(AppPlaceHistoryMapper.class);
+        AppPlaceHistoryMapper historyMapper = GWT.create(AppPlaceHistoryMapper.class);
         PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
         historyHandler.register(placeController, eventBus, userAccountsPlace);
 

@@ -12,8 +12,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import com.google.appengine.api.users.User;
-
 @Entity
 public class MenuItemReview {
 
@@ -24,7 +22,7 @@ public class MenuItemReview {
 	@NotNull
 	private MenuItem menuItem;
 	
-	private User author;
+	private EatRightAppUser author;
 	
 	private Date dateCreated;
 	
@@ -56,11 +54,11 @@ public class MenuItemReview {
 		this.menuItem = menuItem;
 	}
 
-	public User getAuthor() {
+	public EatRightAppUser getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(EatRightAppUser author) {
 		this.author = author;
 	}
 

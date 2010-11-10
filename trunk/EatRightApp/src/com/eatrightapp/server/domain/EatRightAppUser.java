@@ -8,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import com.google.appengine.api.users.User;
-
 @Entity
 public class EatRightAppUser {
 
@@ -18,7 +16,13 @@ public class EatRightAppUser {
 	private Long id;
 	
 	@NotNull
-	private User user;
+	private String userId;
+	
+	private String email;
+	
+	private String nickname;
+	
+	private String federatedIdentity;
 	
 	private String comment;
 	
@@ -32,12 +36,12 @@ public class EatRightAppUser {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getComment() {
@@ -56,6 +60,30 @@ public class EatRightAppUser {
 		this.banned = banned;
 	}
 	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getFederatedIdentity() {
+		return federatedIdentity;
+	}
+
+	public void setFederatedIdentity(String federatedIdentity) {
+		this.federatedIdentity = federatedIdentity;
+	}
 	
 	// Entity Service Implementation //////////////////////////////////////////////////
 
@@ -69,7 +97,7 @@ public class EatRightAppUser {
 		return null;
 	}
 	
-	public List<EatRightAppUser> findUsers(String email, String nickname, int firstResult, int maxResults) {
+	public List<EatRightAppUser> findUsersByEmailOrNickname(String email, String nickname, int firstResult, int maxResults) {
 		// TODO implement EatRightAppUser.findUsers
 		return null;
 	}
