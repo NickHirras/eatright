@@ -11,6 +11,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 
@@ -36,7 +37,8 @@ public class Admin implements EntryPoint {
         PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(historyMapper);
         historyHandler.register(placeController, eventBus, userAccountsPlace);
 
-        RootPanel.get().add(appWidget);
+        DOM.removeChild(RootPanel.getBodyElement(), DOM.getElementById("admin_content"));
+        RootPanel.get().add(appWidget);    
         
         // Goes to the place represented on URL else default place
         historyHandler.handleCurrentHistory();
