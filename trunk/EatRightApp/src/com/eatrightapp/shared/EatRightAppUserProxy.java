@@ -6,11 +6,9 @@ import com.google.gwt.requestfactory.shared.ProxyFor;
 
 @ProxyFor(EatRightAppUser.class)
 interface EatRightAppUserProxy extends EntityProxy {
-	Long getId();
+	String getId();
 
-	String getUserId();
-
-	void setUserId(String userId);
+	void setId(String id);
 	
 	String getEmail();
 
@@ -31,5 +29,9 @@ interface EatRightAppUserProxy extends EntityProxy {
 	Boolean getBanned();
 
 	void setBanned(Boolean banned);
+	
+	Boolean getModerator();
+	
+	void setModerator(Boolean moderator);
 
 }
