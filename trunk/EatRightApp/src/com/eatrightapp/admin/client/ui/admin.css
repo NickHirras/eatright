@@ -1,0 +1,28 @@
+.globalBar {
+	border-bottom: 1px solid silver;
+	display: block;
+	width: 100%;
+	margin-top: 3px;
+	padding-bottom: 2px;	
+}
+
+.globalUser {
+	position: absolute;
+	right: 0;
+}
+
+.globalUserName { 
+	font-weight: bolder;
+}
+
+.toolbar {
+	background-color: silver;
+	border-top: 1px solid gray;
+	padding: 3px;
+}
+
+.menuPanel {
+	border-right: 2px solid silver;
+	padding-right: 16px;
+}
+
