@@ -4,22 +4,20 @@
     "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-  
-  <!-- Servlets -->
-<!--  <servlet>-->
-<!--    <servlet-name>greetServlet</servlet-name>-->
-<!--    <servlet-class>com.eatrightapp.server.GreetingServiceImpl</servlet-class>-->
-<!--  </servlet>-->
-<!--  -->
-<!--  <servlet-mapping>-->
-<!--    <servlet-name>greetServlet</servlet-name>-->
-<!--    <url-pattern>/eatrightapp/greet</url-pattern>-->
-<!--  </servlet-mapping>-->
-  
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>PublicWeb.html</welcome-file>
-  </welcome-file-list>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	
+    <security-constraint>
+        <web-resource-collection>
+        	<web-resource-name>AdminConsole</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>            
+            <url-pattern>/Admin.html</url-pattern>            
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
 
 </web-app>
