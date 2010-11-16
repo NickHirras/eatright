@@ -12,11 +12,7 @@ import javax.validation.constraints.NotNull;
 public class EatRightAppUser {
 
 	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@NotNull
-	private String userId;
+	private String id;
 	
 	private String email;
 	
@@ -27,21 +23,15 @@ public class EatRightAppUser {
 	private String comment;
 	
 	private Boolean banned;
+	
+	private Boolean moderator;
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public String getComment() {
@@ -83,6 +73,14 @@ public class EatRightAppUser {
 
 	public void setFederatedIdentity(String federatedIdentity) {
 		this.federatedIdentity = federatedIdentity;
+	}
+	
+	public Boolean getModerator() {
+		return moderator;
+	}
+	
+	public void setModerator(Boolean moderator) {
+		this.moderator = moderator;
 	}
 	
 	// Entity Service Implementation //////////////////////////////////////////////////
