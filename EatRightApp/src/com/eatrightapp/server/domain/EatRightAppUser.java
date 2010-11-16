@@ -3,17 +3,18 @@ package com.eatrightapp.server.domain;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+
+import com.google.gwt.requestfactory.shared.EntityProxyId;
+import com.google.gwt.requestfactory.shared.UserInformationProxy;
 
 @Entity
-public class EatRightAppUser {
+public class EatRightAppUser implements UserInformationProxy {
 
-	@Id	
+	@Id		
 	private String id;
-	
+
 	private String email;
 	
 	private String nickname;
@@ -50,7 +51,6 @@ public class EatRightAppUser {
 		this.banned = banned;
 	}
 	
-
 	public String getEmail() {
 		return email;
 	}
@@ -85,20 +85,40 @@ public class EatRightAppUser {
 	
 	// Entity Service Implementation //////////////////////////////////////////////////
 
-	public Long countUsers() {
+	public static Long countUsers() {
 		// TODO implement EatRightAppUser.countUsers
 		return null;
 	}
 	
-	public Long countModerators() {
+	public static Long countModerators() {
 		// TODO implement EatRightAppUser.countModerators
 		return null;
 	}
 	
-	public List<EatRightAppUser> findUsersByEmailOrNickname(String email, String nickname, int firstResult, int maxResults) {
+	public static EatRightAppUser findUserById(String id) {
+		// TODO implement EatRightAppUser.findUserByUserId
+		if(id == null) {
+			return null;
+		}
+		
+		EntityManager em = entityManager();
+		try {
+			EatRightAppUser user = em.find(EatRightAppUser.class, id);
+			return user;
+		} finally {
+			em.close();
+		}
+	}
+	
+	public static List<EatRightAppUser> findUsersByEmailOrNickname(String email, String nickname, int firstResult, int maxResults) {
 		// TODO implement EatRightAppUser.findUsers
 		return null;
 	}
+	
+	public static final EntityManager entityManager() {
+		return EMF.get().createEntityManager();
+	}
+
 	
 	public void persist() {
 		// TODO implement EatRightAppUser.persist
@@ -106,6 +126,30 @@ public class EatRightAppUser {
 	
 	public void remove() {
 		// TODO implement EatRightAppUser.remove
+	}
+
+	@Override
+	public EntityProxyId<?> stableId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getLoginUrl() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getLogoutUrl() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
