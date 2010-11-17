@@ -28,6 +28,7 @@ import com.google.gwt.requestfactory.shared.Service;
 public interface MenuItemReviewRequest extends RequestContext {
 	Request<Long> countMenuItemReviews();
 	Request<Long> countMenuItemReviewsByMenuItem(MenuItemProxy menuItem);
+	Request<MenuItemReviewProxy> findMenuItemReview(Long id);
 	Request<List<MenuItemReviewProxy>> findMenuItemReviewsByMenuItem(MenuItemProxy menuItem, int firstResult, int maxResults);
 	InstanceRequest<MenuItemReviewProxy, Void> persist();
 	InstanceRequest<MenuItemReviewProxy, Void> remove();

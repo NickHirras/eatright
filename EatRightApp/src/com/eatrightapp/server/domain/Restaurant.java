@@ -29,6 +29,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Restaurant {
 
+	private Integer version = 0;
+	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -54,6 +56,14 @@ public class Restaurant {
 	
 	private Boolean inaccurate;
 
+	public Integer getVersion() {
+		return version;
+	}
+	
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -150,6 +160,11 @@ public class Restaurant {
 
 	public Long countRestaurants() {
 		// TODO implement Restaurant.countRestaurants
+		return null;
+	}
+	
+	public Restaurant findRestaurant(Long id) {
+		// TODO implement Restaurant.findRestaurant 
 		return null;
 	}
 	

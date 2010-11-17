@@ -27,6 +27,7 @@ import com.google.gwt.requestfactory.shared.Service;
 @Service(Restaurant.class)
 public interface RestaurantRequest extends RequestContext {
 	Request<Long> countRestaurants();
+	Request<RestaurantProxy> findRestaurant(Long id);
 	Request<List<RestaurantProxy>> findRestaurantsByName(String restaurantName, int firstResult, int maxResults);
 	Request<List<RestaurantProxy>> findRestaurantsByUrl(String url, int firstResult, int maxResults);
 	Request<List<RestaurantProxy>> findRestaurantsByLocation(String city, String state, String zip, int firstResult, int maxResults);
