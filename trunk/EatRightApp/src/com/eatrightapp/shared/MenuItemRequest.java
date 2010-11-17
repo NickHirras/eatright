@@ -28,6 +28,7 @@ import com.google.gwt.requestfactory.shared.Service;
 public interface MenuItemRequest extends RequestContext {
 	Request<Long> countMenuItems();
 	Request<Long> countMenuItemsByPlace(String placesReference, String placesUrl);
+	Request<MenuItemProxy> findMenuItem(Long id);
 	Request<List<MenuItemProxy>> findMenuItemsByPlace(String placesReference, String placesUrl, int firstResult, int maxResults);
 	InstanceRequest<MenuItemProxy, Void> persist();
 	InstanceRequest<MenuItemProxy, Void> remove();

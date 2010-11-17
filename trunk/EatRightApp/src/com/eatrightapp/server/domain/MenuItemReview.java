@@ -31,6 +31,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class MenuItemReview {
 
+	private Integer version = 0;
+	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -54,6 +56,14 @@ public class MenuItemReview {
 	
 	private Boolean spam;
 
+	public Integer getVersion() {
+		return version;
+	}
+	
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -138,6 +148,10 @@ public class MenuItemReview {
 	}
 	public Long countMenuItemReviewsByMenuItem(MenuItem menuItem) {
 		// TODO implement MenuItemReview.countMenuItemReviewsByMenuItem
+		return null;
+	}
+	public static MenuItemReview findMenuItemReview(Long id) {
+		// TODO implement MenuItemReview.findMenuItemReview
 		return null;
 	}
 	public List<MenuItemReview> findMenuItemReviewsByMenuItem(MenuItem menuItem, int firstResult, int maxResults) {

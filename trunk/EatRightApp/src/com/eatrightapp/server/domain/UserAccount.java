@@ -27,6 +27,8 @@ import javax.persistence.Id;
 @Entity
 public class UserAccount {
 
+	private Integer version = 0;
+	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -40,6 +42,14 @@ public class UserAccount {
 	private String comment;
 	
 	private Boolean banned;
+
+	public Integer getVersion() {
+		return version;
+	}
+	
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 
 	public Long getId() {
 		return id;
@@ -99,6 +109,11 @@ public class UserAccount {
 	
 	public static Long countModerators() {
 		// TODO implement EatRightAppUser.countModerators
+		return null;
+	}
+	
+	public static UserAccount findUser(Long id) {
+		// TODO implement EatRightAppUser.findUser
 		return null;
 	}
 	

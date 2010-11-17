@@ -31,6 +31,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class MenuItem {
 
+	private Integer version = 0;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -72,6 +74,14 @@ public class MenuItem {
 	private Boolean spam;
 	
 	private Boolean inaccurate;
+	
+	public Integer getVersion() {
+		return version;
+	}
+	
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
 	
 	public Long getId() {
 		return id;
@@ -157,24 +167,12 @@ public class MenuItem {
 		this.carbs = carbs;
 	}
 
-	public Boolean isBreakfast() {
-		return breakfast;
-	}
-
 	public void setBreakfast(Boolean breakfast) {
 		this.breakfast = breakfast;
 	}
 
-	public Boolean isLunch() {
-		return lunch;
-	}
-
 	public void setLunch(Boolean lunch) {
 		this.lunch = lunch;
-	}
-
-	public Boolean isDinner() {
-		return dinner;
 	}
 
 	public void setDinner(Boolean dinner) {
@@ -213,16 +211,8 @@ public class MenuItem {
 		this.modifiedDate = modifiedDate;
 	}
 
-	public Boolean isSpam() {
-		return spam;
-	}
-
 	public void setSpam(Boolean spam) {
 		this.spam = spam;
-	}
-
-	public Boolean isInaccurate() {
-		return inaccurate;
 	}
 
 	public void setInaccurate(Boolean inaccurate) {
@@ -242,6 +232,11 @@ public class MenuItem {
 	
 	public Long countMenuItemsByPlace(String placesReference, String placesUrl) {
 		// TODO implement MenuItem.countMenuItemsByPlace
+		return null;
+	}
+
+	public MenuItem findMenuItem(Long id) {
+		// TODO implement MenuItem.findMenuItem
 		return null;
 	}
 	

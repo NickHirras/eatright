@@ -28,6 +28,7 @@ import com.google.gwt.requestfactory.shared.Service;
 public interface UserAccountRequest extends RequestContext {
 	Request<Long> countUsers();
 	Request<Long> countModerators();
+	Request<UserAccountProxy> findUser(Long id);
 	Request<UserAccountProxy> findUserById(String id);
 	Request<List<UserAccountProxy>> findUsersByEmailOrNickname(String email, String nickname, int firstResult, int maxResults);
 	InstanceRequest<UserAccountProxy, Void> persist();

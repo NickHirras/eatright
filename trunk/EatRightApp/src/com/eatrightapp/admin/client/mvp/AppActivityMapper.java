@@ -19,22 +19,26 @@ package com.eatrightapp.admin.client.mvp;
 import com.eatrightapp.admin.client.AdminClientFactory;
 import com.eatrightapp.admin.client.activity.UserAccountsActivity;
 import com.eatrightapp.admin.client.place.UserAccountsPlace;
+import com.eatrightapp.shared.EatRightAppRequestFactory;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 
 public class AppActivityMapper implements ActivityMapper {
 	private AdminClientFactory clientFactory;
+	private EatRightAppRequestFactory requestFactory;
 
     public AppActivityMapper(AdminClientFactory clientFactory) {
         super();
         this.clientFactory = clientFactory;
+        this.requestFactory = GWT.create(EatRightAppRequestFactory.class);
     }
 
     @Override
     public Activity getActivity(Place place) {
         if (place instanceof UserAccountsPlace) {
-            return new UserAccountsActivity((UserAccountsPlace) place, clientFactory);
+            return new UserAccountsActivity((UserAccountsPlace) place, clientFactory, requestFactory);
         }
         return null;
     }
