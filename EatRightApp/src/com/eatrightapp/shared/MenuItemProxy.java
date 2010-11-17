@@ -58,9 +58,9 @@ interface MenuItemProxy extends EntityProxy {
 
 	 void setRatingsCount(Long ratingsCount);
 
-	 EatRightAppUserProxy getModifiedBy();
+	 UserAccountProxy getModifiedBy();
 
-	 void setModifiedBy(EatRightAppUserProxy modifiedBy);
+	 void setModifiedBy(UserAccountProxy modifiedBy);
 
 	 Date getModifiedDate();
 

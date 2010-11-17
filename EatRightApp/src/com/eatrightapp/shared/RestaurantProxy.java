@@ -39,9 +39,9 @@ interface RestaurantProxy extends EntityProxy {
 
 	void setZip(String zip);
 
-	EatRightAppUserProxy getModifiedBy();
+	UserAccountProxy getModifiedBy();
 
-	void setModifiedBy(EatRightAppUserProxy modifiedBy);
+	void setModifiedBy(UserAccountProxy modifiedBy);
 
 	Date getModifiedDate();
 

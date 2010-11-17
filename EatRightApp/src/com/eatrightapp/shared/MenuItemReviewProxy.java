@@ -14,9 +14,9 @@ interface MenuItemReviewProxy extends EntityProxy {
 
 	void setMenuItem(MenuItemProxy menuItem);
 	
-	EatRightAppUserProxy getAuthor();
+	UserAccountProxy getAuthor();
 
-	void setAuthor(EatRightAppUserProxy author);
+	void setAuthor(UserAccountProxy author);
 
 	Date getDateCreated();
 

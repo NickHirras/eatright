@@ -22,7 +22,7 @@ public class MenuItemReview {
 	@NotNull
 	private MenuItem menuItem;
 	
-	private EatRightAppUser author;
+	private UserAccount author;
 	
 	private Date dateCreated;
 	
@@ -54,11 +54,11 @@ public class MenuItemReview {
 		this.menuItem = menuItem;
 	}
 
-	public EatRightAppUser getAuthor() {
+	public UserAccount getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(EatRightAppUser author) {
+	public void setAuthor(UserAccount author) {
 		this.author = author;
 	}
 

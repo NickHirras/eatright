@@ -32,7 +32,7 @@ public class Restaurant {
 	
 	private String zip;
 	
-	private EatRightAppUser modifiedBy;
+	private UserAccount modifiedBy;
 	
 	private Date modifiedDate;
 	
@@ -102,11 +102,11 @@ public class Restaurant {
 		this.zip = zip;
 	}
 
-	public EatRightAppUser getModifiedBy() {
+	public UserAccount getModifiedBy() {
 		return modifiedBy;
 	}
 
-	public void setModifiedBy(EatRightAppUser modifiedBy) {
+	public void setModifiedBy(UserAccount modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
