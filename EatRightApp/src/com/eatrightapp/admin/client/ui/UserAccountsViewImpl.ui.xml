@@ -23,8 +23,13 @@
 		</g:north>
 		<g:west size="25">
 			<g:VerticalPanel styleName="{admin.menuPanel}">
-				<g:Label>User Accounts</g:Label>
-				<g:Hyperlink>Menus and Reviews</g:Hyperlink>
+				<g:HTMLPanel>
+					<g:Label>Menu</g:Label>
+					<g:VerticalPanel styleName="{admin.menuItems}"> 
+						<g:Label>&nbsp;&nbsp;User Accounts</g:Label>
+						<g:Hyperlink>&nbsp;&nbsp;Menus and Reviews</g:Hyperlink>
+					</g:VerticalPanel>
+				</g:HTMLPanel>
 			</g:VerticalPanel>
 		</g:west>
 		<g:center>

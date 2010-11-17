@@ -1,3 +1,4 @@
+
 .globalBar {
 	border-bottom: 1px solid silver;
 	display: block;
@@ -11,10 +12,6 @@
 	right: 0;
 }
 
-.globalUserName { 
-	font-weight: bolder;
-}
-
 .toolbar {
 	background-color: silver;
 	border-top: 1px solid gray;
@@ -24,5 +21,9 @@
 .menuPanel {
 	border-right: 2px solid silver;
 	padding-right: 16px;
+}
+
+.menuItems {
+	padding-left: 16px;
 }
 
