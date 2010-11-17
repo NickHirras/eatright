@@ -48,7 +48,7 @@ public class MenuItem {
 	private Long ratingsCount;
 	
 	@NotNull
-	private EatRightAppUser modifiedBy;
+	private UserAccount modifiedBy;
 	
 	@NotNull
 	private Date modifiedDate;
@@ -181,11 +181,11 @@ public class MenuItem {
 		this.ratingsCount = ratingsCount;
 	}
 
-	public EatRightAppUser getModifiedBy() {
+	public UserAccount getModifiedBy() {
 		return modifiedBy;
 	}
 
-	public void setModifiedBy(EatRightAppUser modifiedBy) {
+	public void setModifiedBy(UserAccount modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
 
