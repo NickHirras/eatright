@@ -18,6 +18,7 @@ package com.eatrightapp.admin.client.ui;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.ui.client.LoginWidget;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.IsWidget;
 
 public interface UserAccountsView extends IsWidget {
@@ -28,4 +29,7 @@ public interface UserAccountsView extends IsWidget {
     }
 	
 	LoginWidget getLoginWidget();
+	
+	SimplePager getPager();
+	
 }

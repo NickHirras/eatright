@@ -1,6 +1,5 @@
 
 .globalBar {
-	border-bottom: 1px solid silver;
 	display: block;
 	width: 100%;
 	margin-top: 3px;
@@ -20,10 +19,33 @@
 
 .menuPanel {
 	border-right: 2px solid silver;
-	padding-right: 16px;
+	margin-right: 16px;
 }
 
-.menuItems {
-	padding-left: 16px;
+.menuPanel ul {	
+	margin:0;
+	padding:0 0 0 0.5em;
+	list-style-type: none;
 }
+
+.menuPanel ul li {
+	line-height: 1.5em;
+	padding-left: 0.5em;
+}
+
+.menuItemSelected {
+	background-color: silver;
+	-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-topleft:4px;
+	color:#000000;
+	display:block;
+	font-weight:bold;
+	margin-right:-1px;
+	padding-left: 0.5em;
+}
+
+.menuItem {
+	padding-left: 0.5em;
+}
+
 

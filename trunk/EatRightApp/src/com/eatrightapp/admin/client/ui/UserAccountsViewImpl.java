@@ -21,6 +21,7 @@ import com.google.gwt.requestfactory.ui.client.LoginWidget;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -31,6 +32,8 @@ public class UserAccountsViewImpl extends Composite implements UserAccountsView 
 	private Presenter presenter;
 	
 	@UiField LoginWidget loginWidget;
+	
+	@UiField SimplePager pager;
 	
 	@UiTemplate("UserAccountsViewImpl.ui.xml")
 	interface UserAccountsViewImplUiBinder extends UiBinder<Widget, UserAccountsViewImpl> {
@@ -47,6 +50,10 @@ public class UserAccountsViewImpl extends Composite implements UserAccountsView 
 		
 	public LoginWidget getLoginWidget() {
 	    return loginWidget;
+	}
+	
+	public SimplePager getPager() {
+		return pager;
 	}
 	
 }
