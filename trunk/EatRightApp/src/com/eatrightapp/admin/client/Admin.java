@@ -19,6 +19,7 @@ package com.eatrightapp.admin.client;
 import com.eatrightapp.admin.client.mvp.AppActivityMapper;
 import com.eatrightapp.admin.client.mvp.AppPlaceHistoryMapper;
 import com.eatrightapp.admin.client.place.UserAccountsPlace;
+import com.eatrightapp.shared.EatRightAppRequestFactory;
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.EntryPoint;
@@ -38,14 +39,16 @@ import com.google.gwt.user.client.ui.SimplePanel;
 public class Admin implements EntryPoint {
     private Place userAccountsPlace = new UserAccountsPlace();
     private SimplePanel appWidget = new SimplePanel();
+	private EatRightAppRequestFactory requestFactory;
 
     public void onModuleLoad() { 
         AdminClientFactory clientFactory = GWT.create(AdminClientFactory.class);
         EventBus eventBus = clientFactory.getEventBus();
         PlaceController placeController = clientFactory.getPlaceController();
+        requestFactory = GWT.create(EatRightAppRequestFactory.class);
 
         // Start ActivityManager for the main widget with our ActivityMapper
-        ActivityMapper activityMapper = new AppActivityMapper(clientFactory);
+        ActivityMapper activityMapper = new AppActivityMapper(clientFactory, requestFactory);
         ActivityManager activityManager = new ActivityManager(activityMapper, eventBus);
         activityManager.setDisplay(appWidget);
 

@@ -22,17 +22,16 @@ import com.eatrightapp.admin.client.place.UserAccountsPlace;
 import com.eatrightapp.shared.EatRightAppRequestFactory;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 
 public class AppActivityMapper implements ActivityMapper {
 	private AdminClientFactory clientFactory;
 	private EatRightAppRequestFactory requestFactory;
 
-    public AppActivityMapper(AdminClientFactory clientFactory) {
+    public AppActivityMapper(AdminClientFactory clientFactory, EatRightAppRequestFactory requestFactory) {
         super();
         this.clientFactory = clientFactory;
-        this.requestFactory = GWT.create(EatRightAppRequestFactory.class);
+        this.requestFactory = requestFactory;
     }
 
     @Override

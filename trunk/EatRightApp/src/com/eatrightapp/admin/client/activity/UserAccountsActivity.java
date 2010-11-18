@@ -24,7 +24,9 @@ import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.shared.Receiver;
+import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.UserInformationProxy;
+import com.google.gwt.requestfactory.shared.UserInformationRequest;
 import com.google.gwt.requestfactory.ui.client.LoginWidget;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -32,10 +34,11 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 public class UserAccountsActivity extends AbstractActivity implements UserAccountsView.Presenter {
 	// Used to obtain views, eventBus, placeController
     private AdminClientFactory clientFactory;
-
-    private final EatRightAppRequestFactory requestFactory; 
+    private EatRightAppRequestFactory requestFactory;
+    private UserAccountsPlace place;
     
     public UserAccountsActivity(UserAccountsPlace place, AdminClientFactory clientFactory, EatRightAppRequestFactory requestFactory) {    	
+    	this.place = place;
     	this.clientFactory = clientFactory;
     	this.requestFactory = requestFactory;    	
     }       
@@ -52,8 +55,11 @@ public class UserAccountsActivity extends AbstractActivity implements UserAccoun
     	    	  loginWidget.setUserInformation(userInformationRecord);
     	      }
     	    };
-    	    requestFactory.userInformationRequest().getCurrentUserInformation(
-    	        Location.getHref()).fire(receiver);
+    	    UserInformationRequest userInformationRequest = requestFactory.userInformationRequest();
+    	    Request<UserInformationProxy> currentUserInformation = userInformationRequest.getCurrentUserInformation(Location.getHref());
+    	    currentUserInformation.fire(receiver);
+//    	    requestFactory.userInformationRequest().getCurrentUserInformation(
+//    	        Location.getHref()).fire(receiver);
     	
         containerWidget.setWidget(userAccountsView.asWidget());
 	}
