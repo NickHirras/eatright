@@ -142,11 +142,11 @@ public class MenuItemReview {
 		return EMF.get().createEntityManager();
 	}
 	
-	public Long countMenuItemReviews() {
+	public static Long countMenuItemReviews() {
 		// TODO implement MenuItemReview.countMenuItemReviews
 		return null;
 	}
-	public Long countMenuItemReviewsByMenuItem(MenuItem menuItem) {
+	public static Long countMenuItemReviewsByMenuItem(MenuItem menuItem) {
 		// TODO implement MenuItemReview.countMenuItemReviewsByMenuItem
 		return null;
 	}
@@ -154,7 +154,7 @@ public class MenuItemReview {
 		// TODO implement MenuItemReview.findMenuItemReview
 		return null;
 	}
-	public List<MenuItemReview> findMenuItemReviewsByMenuItem(MenuItem menuItem, int firstResult, int maxResults) {
+	public static List<MenuItemReview> findMenuItemReviewsByMenuItem(MenuItem menuItem, int firstResult, int maxResults) {
 		// TODO implement MenuItemReview.findMenuItemReviewsByMenuItem
 		return null;
 	}

@@ -225,22 +225,22 @@ public class MenuItem {
 		return EMF.get().createEntityManager();
 	}
 	
-	public Long countMenuItems() {
+	public static Long countMenuItems() {
 		// TODO implement MenuItem.countMenuItems
 		return null;
 	}
 	
-	public Long countMenuItemsByPlace(String placesReference, String placesUrl) {
+	public static Long countMenuItemsByPlace(String placesReference, String placesUrl) {
 		// TODO implement MenuItem.countMenuItemsByPlace
 		return null;
 	}
 
-	public MenuItem findMenuItem(Long id) {
+	public static MenuItem findMenuItem(Long id) {
 		// TODO implement MenuItem.findMenuItem
 		return null;
 	}
 	
-	public List<MenuItem> findMenuItemsByPlace(String placesReference, String placesUrl, int firstResult, int maxResults) {
+	public static List<MenuItem> findMenuItemsByPlace(String placesReference, String placesUrl, int firstResult, int maxResults) {
 		// TODO implement MenuItem.findMenuItemsByPlace
 		return null;
 	}
