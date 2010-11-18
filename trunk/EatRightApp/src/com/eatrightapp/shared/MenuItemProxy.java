@@ -54,15 +54,15 @@ interface MenuItemProxy extends EntityProxy {
 
 	 void setCarbs(Integer carbs);
 
-	 Boolean isBreakfast();
+	 Boolean getBreakfast();
 
 	 void setBreakfast(Boolean breakfast);
 
-	 Boolean isLunch();
+	 Boolean getLunch();
 
 	 void setLunch(Boolean lunch);
 
-	 Boolean isDinner();
+	 Boolean getDinner();
 
 	 void setDinner(Boolean dinner);
 
@@ -82,11 +82,11 @@ interface MenuItemProxy extends EntityProxy {
 
 	 void setModifiedDate(Date modifiedDate);
 
-	 Boolean isSpam();
+	 Boolean getSpam();
 
 	 void setSpam(Boolean spam);
 
-	 Boolean isInaccurate();
+	 Boolean getInaccurate();
 
 	 void setInaccurate(Boolean inaccurate);
 

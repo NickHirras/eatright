@@ -158,27 +158,27 @@ public class Restaurant {
 		return EMF.get().createEntityManager();
 	}
 
-	public Long countRestaurants() {
+	public static Long countRestaurants() {
 		// TODO implement Restaurant.countRestaurants
 		return null;
 	}
 	
-	public Restaurant findRestaurant(Long id) {
+	public static Restaurant findRestaurant(Long id) {
 		// TODO implement Restaurant.findRestaurant 
 		return null;
 	}
 	
-	public List<Restaurant> findRestaurantsByName(String restaurantName, int firstResult, int maxResults) {
+	public static List<Restaurant> findRestaurantsByName(String restaurantName, int firstResult, int maxResults) {
 		// TODO implement Restaurant.findRestaurantsByName 
 		return null;
 	}
 	
-	public List<Restaurant> findRestaurantsByUrl(String url, int firstResult, int maxResults) {
+	public static List<Restaurant> findRestaurantsByUrl(String url, int firstResult, int maxResults) {
 		// TODO implement Restaurant.findRestaurantsByUrl
 		return null;
 	}
 	
-	public List<Restaurant> findRestaurantsByLocation(String city, String state, String zip, int firstResult, int maxResults) {
+	public static List<Restaurant> findRestaurantsByLocation(String city, String state, String zip, int firstResult, int maxResults) {
 		// TODO implement Restaurant.findRestaurantsByLocation
 		return null;
 	}
