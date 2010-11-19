@@ -6,7 +6,7 @@
              xmlns:c="urn:import:com.google.gwt.user.cellview.client">
 
 <ui:style field="admin" src="admin.css" />
-
+  
 	<g:DockLayoutPanel unit="EM" height="100%" width="100%">
 		<g:north size="4">
 			<g:VerticalPanel width="100%">
