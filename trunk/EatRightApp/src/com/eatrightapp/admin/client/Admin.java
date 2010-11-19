@@ -46,6 +46,7 @@ public class Admin implements EntryPoint {
         EventBus eventBus = clientFactory.getEventBus();
         PlaceController placeController = clientFactory.getPlaceController();
         requestFactory = GWT.create(EatRightAppRequestFactory.class);
+        requestFactory.initialize(eventBus);
 
         // Start ActivityManager for the main widget with our ActivityMapper
         ActivityMapper activityMapper = new AppActivityMapper(clientFactory, requestFactory);
