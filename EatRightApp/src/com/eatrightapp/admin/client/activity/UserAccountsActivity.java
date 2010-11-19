@@ -55,11 +55,8 @@ public class UserAccountsActivity extends AbstractActivity implements UserAccoun
     	    	  loginWidget.setUserInformation(userInformationRecord);
     	      }
     	    };
-    	    UserInformationRequest userInformationRequest = requestFactory.userInformationRequest();
-    	    Request<UserInformationProxy> currentUserInformation = userInformationRequest.getCurrentUserInformation(Location.getHref());
-    	    currentUserInformation.fire(receiver);
-//    	    requestFactory.userInformationRequest().getCurrentUserInformation(
-//    	        Location.getHref()).fire(receiver);
+    	    requestFactory.userInformationRequest().getCurrentUserInformation(
+    	        Location.getHref()).fire(receiver);
     	
         containerWidget.setWidget(userAccountsView.asWidget());
 	}
