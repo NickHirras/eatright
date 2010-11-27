@@ -22,6 +22,7 @@ import java.util.List;
 import com.eatrightapp.shared.EatRightAppRequestFactory;
 import com.eatrightapp.shared.UserAccountProxy;
 import com.google.gwt.cell.client.AbstractCell;
+import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.requestfactory.ui.client.LoginWidget;
@@ -70,6 +71,17 @@ public class UserAccountsViewImpl extends Composite implements UserAccountsView 
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		// Setup the User Accounts table.
+		CheckboxCell checkboxcell = new CheckboxCell();
+		Column<UserAccountProxy, Boolean> selectedColumn = new Column<UserAccountProxy, Boolean>(checkboxcell) {
+
+			@Override
+			public Boolean getValue(UserAccountProxy object) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+		};
+		userAccountsCellTable.addColumn(selectedColumn, "Select");
 		EmailCell emailCell = new EmailCell();
 		Column<UserAccountProxy, String> emailColumn = new Column<UserAccountProxy, String>(emailCell) { 
 			@Override
