@@ -21,7 +21,7 @@ import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.ProxyFor;
 
 @ProxyFor(UserAccount.class)
-interface UserAccountProxy extends EntityProxy {
+public interface UserAccountProxy extends EntityProxy {
 	Long getId();
 
 	void setId(Long id);

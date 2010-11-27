@@ -43,11 +43,12 @@
 					</g:HorizontalPanel>
 				</g:north>
 				<g:center>
-					<c:CellTable width="100%" />
+					<c:CellTable ui:field="userAccountsCellTable" width="100%" />
 				</g:center>
 				<g:south size="3">
 					<g:HorizontalPanel width="100%">
-						<g:Button>Add User Account...</g:Button>				
+						<g:Button>Add User Account...</g:Button>
+						<g:Button ui:field="populateTestDataButton">Populate Test Data</g:Button><!-- TODO Remove before QA / Prod release -->	
 						<c:SimplePager ui:field="pager" location="RIGHT" />
 					</g:HorizontalPanel>
 				</g:south>

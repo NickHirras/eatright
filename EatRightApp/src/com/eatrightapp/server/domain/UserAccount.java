@@ -35,9 +35,9 @@ public class UserAccount {
 	
 	private String userId;
 	
-	private String nickname;
-	
 	private String email;
+	
+	private String nickname;
 
 	private String comment;
 	
@@ -59,27 +59,27 @@ public class UserAccount {
 		this.id = id;
 	}
 	
-	private String getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 	
-	private void setUserId(String userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	
-	private String getNickname() {
+	public String getNickname() {
 		return nickname;
 	}
 	
-	private void setNickname(String nickname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 	
-	private String getEmail() {
+	public String getEmail() {
 		return email;
 	}
 	
-	private void setEmail(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 	

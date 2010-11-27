@@ -16,8 +16,13 @@
 
 package com.eatrightapp.admin.client.ui;
 
+import java.util.List;
+
+import com.eatrightapp.shared.UserAccountProxy;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.ui.client.LoginWidget;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.client.ui.IsWidget;
 
@@ -32,4 +37,10 @@ public interface UserAccountsView extends IsWidget {
 	
 	SimplePager getPager();
 	
+	CellTable<UserAccountProxy> getUserAccountsCellTable();
+	
+	// TODO Remove before QA / Prod release
+	HasClickHandlers getPopulateTestDataButton(); 
+	
+	void setUserAccountsList(List<UserAccountProxy> users);
 }
