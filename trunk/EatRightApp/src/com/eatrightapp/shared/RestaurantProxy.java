@@ -23,7 +23,7 @@ import com.google.gwt.requestfactory.shared.EntityProxy;
 import com.google.gwt.requestfactory.shared.ProxyFor;
 
 @ProxyFor(Restaurant.class)
-interface RestaurantProxy extends EntityProxy {
+public interface RestaurantProxy extends EntityProxy {
 
 	Long getId();
 

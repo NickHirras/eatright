@@ -27,4 +27,6 @@ public interface EatRightAppRequestFactory extends RequestFactory {
 	
 	UserInformationRequest userInformationRequest();	
 	
+	UserAccountRequest userAccountRequest();
+	
 }

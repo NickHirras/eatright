@@ -47,3 +47,11 @@
 .menuItem {
 	padding-left: 0.5em;
 }
+
+.menuItem A {
+	cursor: pointer;
+}
+
+.menuItem A:HOVER {
+	text-decoration: underline;
+}

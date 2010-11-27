@@ -16,17 +16,21 @@
 
 package com.eatrightapp.admin.client.activity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.eatrightapp.admin.client.AdminClientFactory;
 import com.eatrightapp.admin.client.place.UserAccountsPlace;
 import com.eatrightapp.admin.client.ui.UserAccountsView;
 import com.eatrightapp.shared.EatRightAppRequestFactory;
+import com.eatrightapp.shared.UserAccountProxy;
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.requestfactory.shared.Receiver;
-import com.google.gwt.requestfactory.shared.Request;
 import com.google.gwt.requestfactory.shared.UserInformationProxy;
-import com.google.gwt.requestfactory.shared.UserInformationRequest;
 import com.google.gwt.requestfactory.ui.client.LoginWidget;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -36,6 +40,7 @@ public class UserAccountsActivity extends AbstractActivity implements UserAccoun
     private AdminClientFactory clientFactory;
     private EatRightAppRequestFactory requestFactory;
     private UserAccountsPlace place;
+    private UserAccountsView userAccountsView;
     
     public UserAccountsActivity(UserAccountsPlace place, AdminClientFactory clientFactory, EatRightAppRequestFactory requestFactory) {    	
     	this.place = place;
@@ -45,7 +50,7 @@ public class UserAccountsActivity extends AbstractActivity implements UserAccoun
     
     @Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-    	UserAccountsView userAccountsView = clientFactory.getUserAccountsView();
+    	userAccountsView = clientFactory.getUserAccountsView();
     	userAccountsView.setPresenter(this);
     	
     	final LoginWidget loginWidget = userAccountsView.getLoginWidget();
@@ -56,17 +61,89 @@ public class UserAccountsActivity extends AbstractActivity implements UserAccoun
     	      }
     	    };
     	    requestFactory.userInformationRequest().getCurrentUserInformation(
-    	        Location.getHref()).fire(receiver);
+    	        Location.getHref()).fire(receiver);    	 
     	
         containerWidget.setWidget(userAccountsView.asWidget());
 	}
 
-    /**
+    public void populateTestData() {
+//    	List<UserAccountProxy> userAccounts = new ArrayList<UserAccountProxy>();
+//    	UserAccountProxy account;
+//    	long counter = 0L;
+//    	
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("nick.smith@gmail.com");
+//		account.setNickname("Nicholas Smith");
+//		account.setComment("This is the site admin.");
+//		account.setBanned(false);
+//		userAccounts.add(account);
+//
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("imauser@aol.com");
+//		account.setNickname("imauser@aol.com");
+//		account.setComment("Just another user.");
+//		account.setBanned(System.currentTimeMillis() % 2 == 0);
+//		userAccounts.add(account);
+//		
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("teddyb43@yahoo.com");
+//		account.setNickname("Mike S.");
+//		account.setComment("");
+//		account.setBanned(System.currentTimeMillis() % 2 == 0);
+//		userAccounts.add(account);
+//		
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("benw@hotmail.com");
+//		account.setNickname("Ben Williamson");
+//		account.setComment("Temp moderator, may be revoke after 1/1/2011");
+//		account.setBanned(System.currentTimeMillis() % 2 == 0);
+//		userAccounts.add(account);
+//		
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("billg@corp.microsoft.com");
+//		account.setNickname("William H. Gates");
+//		account.setComment("");
+//		account.setBanned(System.currentTimeMillis() % 2 == 0);
+//		userAccounts.add(account);
+//		
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("philg@mit.edu");
+//		account.setNickname("philg");
+//		account.setComment("");
+//		account.setBanned(System.currentTimeMillis() % 2 == 0);
+//		userAccounts.add(account);
+//		
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("adboard@whataburger.com");
+//		account.setNickname("Whataburger Ad Council");
+//		account.setComment("");
+//		account.setBanned(System.currentTimeMillis() % 2 == 0);
+//		userAccounts.add(account);
+//	
+//    	account = requestFactory.userAccountRequest().create(UserAccountProxy.class); 
+//    	account.setId(counter++);
+//    	account.setEmail("jerry@menshealth.com");
+//		account.setNickname("JerryBigz");
+//		account.setComment("");
+//		account.setBanned(System.currentTimeMillis() % 2 == 0);
+//		userAccounts.add(account);
+//		
+//		userAccountsView.getUserAccountsCellTable().setRowData(0,userAccounts);
+	}
+
+	/**
      * Ask user before stopping this activity
      */
     @Override
     public String mayStop() {
-        return "Please hold on. This activity is stopping.";
+        return null;
     }
 
 	/**
