@@ -43,7 +43,9 @@
 					</g:HorizontalPanel>
 				</g:north>
 				<g:center>
-					<c:CellTable ui:field="userAccountsCellTable" width="100%" />
+					<g:VerticalPanel width="100%">
+						<c:CellTable ui:field="userAccountsCellTable" width="100%" />
+					</g:VerticalPanel>
 				</g:center>
 				<g:south size="3">
 					<g:HorizontalPanel width="100%">
