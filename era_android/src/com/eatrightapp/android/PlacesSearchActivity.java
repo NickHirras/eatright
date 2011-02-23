@@ -62,7 +62,6 @@ public class PlacesSearchActivity extends Activity {
 		if(state == null) {
 			return;
 		}
-		// TODO: ** THINK I NEED TO A CLONE METHOD ON BIZ OBJECTS! **
 		placesRowData = (List<Business>) state.get("placesRowData");
 		queryText.setText((CharSequence) state.get("queryText"));
 		myLocation = (String) state.get("myLocation");
