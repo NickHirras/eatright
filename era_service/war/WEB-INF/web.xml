@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
 	<servlet>
 		<servlet-name>jersey</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.eatrightapp.service.restful</param-value>
+			<param-value>com.eatrightapp.service.api</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>jersey</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
 	<!-- <servlet> <servlet-name>Era_service</servlet-name> <servlet-class>com.eatrightapp.service.Era_serviceServlet</servlet-class> 
 		</servlet> <servlet-mapping> <servlet-name>Era_service</servlet-name> <url-pattern>/era_service</url-pattern> 
