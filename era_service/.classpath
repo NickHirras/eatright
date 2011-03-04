@@ -27,5 +27,10 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr107cache-1.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr173_1.0_api.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-codec-1.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-codec-1.4.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gson-1.6.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/objectify-2.2.3.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/scribe-1.1.0.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
