@@ -5,17 +5,25 @@
 		<LinearLayout android:id="@+id/Restaurant_LinearLayout03" android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_weight="1">
 			<LinearLayout android:id="@+id/Restaurant_LinearLayout04" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
 				<TextView android:text="@+id/Restaurant_Address" android:id="@+id/Restaurant_Address" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-				<TextView android:text="@+id/Restaurant_Map" android:id="@+id/Restaurant_Map" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true"></TextView>
 			</LinearLayout>
-			<TextView android:text="@+id/Restaurant_Phone" android:id="@+id/Restaurant_Phone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true" android:autoLink="phone"></TextView>
+			<TextView android:text="@+id/Restaurant_Phone" android:id="@+id/Restaurant_Phone" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 		</LinearLayout>
 		<ImageView android:id="@+id/Restaurant_Image" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="right" android:layout_weight="0"></ImageView>
+	</LinearLayout> 
+	<!--  View android:layout_width="fill_parent" android:layout_height="2dip" android:background="#FF00FF00"></View -->
+	<LinearLayout android:id="@+id/Restaurant_LinearLayout05" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+		<ImageButton android:id="@+id/Restaurant_MapButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_menu_directions"></ImageButton>
+		<ImageButton android:id="@+id/Restaurant_DialButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_menu_call"></ImageButton>
 	</LinearLayout>
-	<!-- <TextView android:text=" " android:id="@+id/Restaurant_BlankLine0" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView> -->
+	<View android:layout_width="fill_parent" android:layout_height="8dip"></View>
 	<LinearLayout android:id="@+id/Restaurant_LinearLayout04" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
 		<ImageView android:id="@+id/Restaurant_RatingImage" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
 		<TextView android:text="@+id/Restaurant_ReviewsQty" android:id="@+id/Restaurant_ReviewsQty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true"></TextView>
 	</LinearLayout>
-
+	<LinearLayout android:id="@+id/Restaurant_LinearLayout06" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+		<ImageView android:id="@+id/Restaurant_RatingImage" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
+		<TextView android:text="@+id/Restaurant_ReviewsQty" android:id="@+id/Restaurant_ReviewsQty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true"></TextView>
+	</LinearLayout>
+	<TextView android:text="@+id/Restaurant_Chain" android:id="@+id/Restaurant_Chain" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
 </LinearLayout>
 

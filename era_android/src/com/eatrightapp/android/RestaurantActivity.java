@@ -1,7 +1,5 @@
 package com.eatrightapp.android;
 
-import java.text.DecimalFormat;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -13,10 +11,13 @@ import android.text.Html;
 import android.text.util.Linkify;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eatrightapp.android.lazylist.ImageLoader;
+import com.eatrightapp.external.era.v1.ERAService;
+import com.eatrightapp.external.era.v1.Restaurant;
 import com.eatrightapp.external.yelp.v2.BusinessDetail;
 import com.eatrightapp.external.yelp.v2.YelpService;
 
@@ -28,13 +29,15 @@ public class RestaurantActivity extends Activity {
 		
 	private TextView restaurantNameTV;
 	private TextView addressTV;
-	private TextView mapTV;
 	private ImageView ratingImageIV;
 	private TextView reviewsQtyTV;
 	private ImageView restaurantImageIV;
 	private TextView snippetTextTV;
 	private ImageView snippetImageIV;
 	private TextView phoneTV;
+	private TextView chainTV;
+	private ImageButton mapBtn;
+	private ImageButton dialBtn;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -49,14 +52,18 @@ public class RestaurantActivity extends Activity {
 		
 		restaurantNameTV = (TextView) findViewById(R.id.Restaurant_RestaurantName);
 		addressTV = (TextView) findViewById(R.id.Restaurant_Address);
-		mapTV = (TextView) findViewById(R.id.Restaurant_Map);
 		ratingImageIV = (ImageView) findViewById(R.id.Restaurant_RatingImage);
 		reviewsQtyTV = (TextView) findViewById(R.id.Restaurant_ReviewsQty);
 		restaurantImageIV = (ImageView) findViewById(R.id.Restaurant_Image);
 		phoneTV = (TextView) findViewById(R.id.Restaurant_Phone);
+		chainTV = (TextView) findViewById(R.id.Restaurant_Chain);
+		mapBtn = (ImageButton) findViewById(R.id.Restaurant_MapButton);
+		dialBtn = (ImageButton) findViewById(R.id.Restaurant_DialButton);
 		
 		// TODO: This may need to be done in an asynctask with a progress dialog.
-		BusinessDetail biz = YelpService.findBusiness(getIntent().getExtras().getString("com.eatrightapp.android.PlacesSearchActivity.YelpId"));
+		String restaurantId = getIntent().getExtras().getString("com.eatrightapp.android.PlacesSearchActivity.YelpId");
+		BusinessDetail biz = YelpService.findBusiness(restaurantId);
+		Restaurant restaurant = ERAService.findRestaurant(restaurantId);
 		
 		restaurantNameTV.setText(biz.getName());
 		
@@ -68,9 +75,10 @@ public class RestaurantActivity extends Activity {
 				mapAddress.append(addrLine).append(", ");
 			}
 			addressTV.setText(Html.fromHtml(address.toString()));
-			mapTV.setText(Html.fromHtml(" (<a href=#>Map</a>) "));
-			mapTV.setClickable(true);
-			mapTV.setOnClickListener(new OnClickListener() {
+//			mapTV.setText(Html.fromHtml(" (<a href=#>Map</a>) "));
+//			mapTV.setClickable(true);
+			mapBtn.setEnabled(true);
+			mapBtn.setOnClickListener(new OnClickListener() {
 
 				@Override
 				public void onClick(View v) {
@@ -93,7 +101,8 @@ public class RestaurantActivity extends Activity {
 			});
 		} else {
 			addressTV.setText("");
-			mapTV.setText("");
+			mapBtn.setEnabled(false);
+//			mapTV.setText("");
 		}
 
 		if(biz.getRatingImgUrl() != null) {
@@ -124,6 +133,42 @@ public class RestaurantActivity extends Activity {
 			phoneTV.setText("");
 		} else {
 			phoneTV.setText(biz.getDisplayPhone());
+		}
+		
+		if(biz.getPhone() == null) {
+			dialBtn.setEnabled(false);
+		} else {
+			dialBtn.setEnabled(true);
+			final String phone = biz.getPhone();
+			dialBtn.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					try {
+						Intent intent = new Intent(android.content.Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+						startActivity(intent);
+					} catch(ActivityNotFoundException ex) {
+						AlertDialog.Builder builder = new AlertDialog.Builder(RestaurantActivity.this);
+						builder.setMessage("Unable to launch dialer.")
+					       .setCancelable(true)
+					       .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+					           public void onClick(DialogInterface dialog, int id) {
+					        	   RestaurantActivity.this.finish();
+					           }
+					       });
+						builder.show();
+					}
+				}
+				
+			});			
+		}
+		
+		if(restaurant != null) {
+			if(restaurant.isChain()) {
+				chainTV.setText("This location is a chain.");
+			} else {
+				chainTV.setText("This is not a chain.");
+			}
 		}
 				
 	}
