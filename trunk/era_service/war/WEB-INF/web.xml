@@ -3,23 +3,22 @@
 	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
+
 	<servlet>
-		<servlet-name>jersey</servlet-name>
+		<servlet-name>EatRightApp_API_v1</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.eatrightapp.service.api</param-value>
+			<param-value>com.eatrightapp.service.api.v1</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>jersey</servlet-name>
-		<url-pattern>/api/*</url-pattern>
+		<servlet-name>EatRightApp_API_v1</servlet-name>
+		<url-pattern>/api/v1/*</url-pattern>
 	</servlet-mapping>
-	<!-- <servlet> <servlet-name>Era_service</servlet-name> <servlet-class>com.eatrightapp.service.Era_serviceServlet</servlet-class> 
-		</servlet> <servlet-mapping> <servlet-name>Era_service</servlet-name> <url-pattern>/era_service</url-pattern> 
-		</servlet-mapping> -->
+
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
