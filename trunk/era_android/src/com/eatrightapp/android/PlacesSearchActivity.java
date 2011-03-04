@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.eatrightapp.android.lazylist.ImageLoader;
 import com.eatrightapp.external.yelp.v2.Business;
@@ -46,7 +47,9 @@ public class PlacesSearchActivity extends Activity {
 	private Button searchBtn;
 	private List<Business> placesRowData;
 	private EditText queryText;
-	private DecimalFormat distanceFormat = new DecimalFormat("#,##0.0"); // format																																				// place
+	private DecimalFormat distanceFormat = new DecimalFormat("#,##0.0"); // format
+																			// //
+																			// place
 	private ImageLoader imageLoader;
 	private String myLocation = null;
 
@@ -57,25 +60,25 @@ public class PlacesSearchActivity extends Activity {
 		state.put("myLocation", myLocation);
 		return state;
 	}
-	
+
 	public void setActivityState(Map<String, Object> state) {
-		if(state == null) {
+		if (state == null) {
 			return;
 		}
 		placesRowData = (List<Business>) state.get("placesRowData");
 		queryText.setText((CharSequence) state.get("queryText"));
 		myLocation = (String) state.get("myLocation");
 	}
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//activity = this;
+		// activity = this;
 		app = (EatRightApp) getApplication();
-		app.getWaldo().start(getApplicationContext());		
+		app.getWaldo().start(getApplicationContext());
 		imageLoader = app.getImageLoader();
-		
+
 		// setContentView(R.layout.main);
 		setContentView(R.layout.places);
 
@@ -84,40 +87,40 @@ public class PlacesSearchActivity extends Activity {
 		placesListView = (ListView) findViewById(R.id.placesListView);
 		placesListView.setEmptyView(emptyResultsContainer);
 		placesListView.setOnItemClickListener(new OnItemClickListener() {
-		    public void onItemClick(AdapterView<?> parent, View view,
-		        int position, long id) {
-		    		Log.d(getClass().getName(), "Starting RestaurantActivity");
-		    		Intent showRestaurant = new Intent();
-		    		showRestaurant.setClassName("com.eatrightapp.android", "com.eatrightapp.android.RestaurantActivity");
-		    		showRestaurant.putExtra("com.eatrightapp.android.PlacesSearchActivity.YelpId", placesRowData.get(position).getId());
-		    		showRestaurant.putExtra("com.eatrightapp.android.PlacesSearchActivity.EatRightAppId", buildEatRightAppId(placesRowData.get(position).getId(), placesRowData.get(position).getLocation().getCity()));
-		    		startActivity(showRestaurant);	
-		    }
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Log.d(getClass().getName(), "Starting RestaurantActivity");
+				Intent showRestaurant = new Intent();
+				showRestaurant.setClassName("com.eatrightapp.android", "com.eatrightapp.android.RestaurantActivity");
+				showRestaurant.putExtra("com.eatrightapp.android.PlacesSearchActivity.YelpId", placesRowData.get(position).getId());
+				showRestaurant.putExtra("com.eatrightapp.android.PlacesSearchActivity.EatRightAppId",
+						buildEatRightAppId(placesRowData.get(position).getId(), placesRowData.get(position).getLocation().getCity()));
+				startActivity(showRestaurant);
+			}
 
 			private String buildEatRightAppId(String id, String city) {
 				return id.replaceAll("-" + city.toLowerCase().replaceAll("[^a-z0-9]", "-") + "$", "");
-				//return city.toLowerCase().replaceAll("[^a-z0-9].", "-");
+				// return city.toLowerCase().replaceAll("[^a-z0-9].", "-");
 			}
-		  });
-		
+		});
+
 		queryText = (EditText) findViewById(R.id.query);
 		queryText.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 					searchBtn.performClick();
 					return true;
 				}
 				return false;
 			}
-			
+
 		});
 
 		searchBtn = (Button) findViewById(R.id.SearchBtn);
 		searchBtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 				imm.hideSoftInputFromWindow(queryText.getWindowToken(), 0);
 				search();
 			}
@@ -129,15 +132,15 @@ public class PlacesSearchActivity extends Activity {
 				promptForLocation();
 			}
 		});
-		
+
 		// Restore app state if possible.
-		if(app.getActivityStates().containsKey(getClass().getCanonicalName())) {
+		if (app.getActivityStates().containsKey(getClass().getCanonicalName())) {
 			setActivityState(app.getActivityStates().get(getClass().getCanonicalName()));
 			updatePlacesRowData(placesRowData);
 			redrawPlacesList();
 		}
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -149,12 +152,12 @@ public class PlacesSearchActivity extends Activity {
 		public String term;
 		public String categoryFilter;
 	}
-	
+
 	private class YelpSearchTask extends AsyncTask<YelpQuery, Integer, Long> {
 		private ProgressDialog progressDialog;
 		private YelpQuery yelpQuery;
 		YelpSearchResult restaurants;
-		
+
 		@Override
 		protected void onCancelled() {
 			super.onCancelled();
@@ -163,9 +166,10 @@ public class PlacesSearchActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-						
+
 			progressDialog = new ProgressDialog(PlacesSearchActivity.this);
-//			progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);		// For doing a true progress bar.	
+			// progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			// // For doing a true progress bar.
 			progressDialog.setMessage("Loading. Please wait...");
 			progressDialog.setCancelable(true);
 			progressDialog.show();
@@ -175,14 +179,16 @@ public class PlacesSearchActivity extends Activity {
 		@Override
 		protected void onProgressUpdate(Integer... values) {
 			super.onProgressUpdate(values);
-//			progressDialog.setProgress(values[0]);  	// For doing a true progress bar.
-//			progressDialog.setMax(values[1]);			// For doing a true progress bar.
+			// progressDialog.setProgress(values[0]); // For doing a true
+			// progress bar.
+			// progressDialog.setMax(values[1]); // For doing a true progress
+			// bar.
 		}
 
 		@Override
 		protected Long doInBackground(YelpQuery... params) {
 			yelpQuery = params[0];
-			
+
 			int radius = 5000;
 			int limit = 20;
 			String sort = "1";
@@ -191,67 +197,74 @@ public class PlacesSearchActivity extends Activity {
 			Double lng = yelpQuery.location == null ? null : yelpQuery.location.getLongitude();
 
 			YelpError error = null;
-			
+
 			restaurants = YelpService.search(lat, lng, myLocation, yelpQuery.term, yelpQuery.categoryFilter, radius, limit, 0, sort);
-			if(restaurants.getError() != null) {
-				error = restaurants.getError();
-			} 
-			while (error == null && restaurants.getBusinesses().size() < restaurants.getTotal()) {
-				YelpSearchResult morePlaces = YelpService.search(lat, lng, myLocation, yelpQuery.term, yelpQuery.categoryFilter, radius, limit, restaurants.getBusinesses().size(), sort);
-				if(morePlaces.getError() != null) {
-					error = morePlaces.getError();					
-				} else {
-					restaurants.getBusinesses().addAll(morePlaces.getBusinesses());
-//					publishProgress(restaurants.getBusinesses().size(), restaurants.getTotal()); // For doing a true progress bar.
+			if (restaurants != null) {
+				if (restaurants.getError() != null) {
+					error = restaurants.getError();
 				}
+				while (error == null && restaurants.getBusinesses().size() < restaurants.getTotal()) {
+					YelpSearchResult morePlaces = YelpService.search(lat, lng, myLocation, yelpQuery.term, yelpQuery.categoryFilter, radius, limit, restaurants
+							.getBusinesses().size(), sort);
+					if (morePlaces.getError() != null) {
+						error = morePlaces.getError();
+					} else {
+						restaurants.getBusinesses().addAll(morePlaces.getBusinesses());
+						// publishProgress(restaurants.getBusinesses().size(),
+						// restaurants.getTotal()); // For doing a true progress
+						// bar.
+					}
+				}
+			} else {
+				// TODO: Show error? No results from yelp! Probably no network connectivity.
+				
 			}
-			
+
 			return null;
 		}
-		
+
 		@Override
 		protected void onPostExecute(Long result) {
 			super.onPostExecute(result);
 			progressDialog.dismiss();
-			if(restaurants.getError() != null) {
-				YelpError e = restaurants.getError();
-				AlertDialog.Builder builder = new AlertDialog.Builder(PlacesSearchActivity.this);
-				StringBuilder sb = new StringBuilder();
-				sb.append("The search service has encountered an error.\n");
-				if(e.getId() != null) { 
-					sb.append(e.getId()).append("\n");
-				}
-				if(e.getField() != null) {
-					sb.append(e.getField()).append("\n");
-				}
-				if(e.getText() != null) {
-					sb.append(e.getText()).append("\n");
-				}
-				if(e.getDescription() != null) {
-					sb.append(e.getDescription()).append("\n");
-				}
-				sb.append("Do you want to quit?");
-				builder.setMessage(sb)
-				       .setCancelable(false)
-				       .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-				           public void onClick(DialogInterface dialog, int id) {
-				        	   PlacesSearchActivity.this.finish();
-				           }
-				       })
-				       .setNegativeButton("No", new DialogInterface.OnClickListener() {
-				           public void onClick(DialogInterface dialog, int id) {
-				                dialog.cancel();
-				           }
-				       });
-				builder.show();
+			if(restaurants == null) {
+				Toast.makeText(getApplicationContext(), "No results, maybe the network is down?", Toast.LENGTH_LONG).show();
 			} else {
-				updatePlacesRowData(restaurants.getBusinesses());
-				redrawPlacesList();
+				if (restaurants.getError() != null) {
+					YelpError e = restaurants.getError();
+					AlertDialog.Builder builder = new AlertDialog.Builder(PlacesSearchActivity.this);
+					StringBuilder sb = new StringBuilder();
+					sb.append("The search service has encountered an error.\n");
+					if (e.getId() != null) {
+						sb.append(e.getId()).append("\n");
+					}
+					if (e.getField() != null) {
+						sb.append(e.getField()).append("\n");
+					}
+					if (e.getText() != null) {
+						sb.append(e.getText()).append("\n");
+					}
+					if (e.getDescription() != null) {
+						sb.append(e.getDescription()).append("\n");
+					}
+					sb.append("Do you want to quit?");
+					builder.setMessage(sb).setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							PlacesSearchActivity.this.finish();
+						}
+					}).setNegativeButton("No", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					});
+					builder.show();
+				} else {
+					updatePlacesRowData(restaurants.getBusinesses());
+					redrawPlacesList();
+				}
 			}
-			
 		}
 	}
-
 
 	private void promptForLocation() {
 		final AlertDialog.Builder locationDialog = new AlertDialog.Builder(this);
@@ -266,11 +279,11 @@ public class PlacesSearchActivity extends Activity {
 		locationDialog.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				myLocation = input.getText().toString();
-				if(myLocation != null && myLocation.trim().length() == 0) {
+				if (myLocation != null && myLocation.trim().length() == 0) {
 					myLocation = null;
 				}
 				locationBtn.setText("Near " + (myLocation == null ? "me" : myLocation));
-				dialog.dismiss();	
+				dialog.dismiss();
 			}
 		});
 
@@ -290,18 +303,17 @@ public class PlacesSearchActivity extends Activity {
 		locationBtn.setText("Near " + (myLocation == null ? "me" : myLocation));
 		Location location = myLocation == null ? app.getWaldo().getLocation() : null;
 
-		if(app.getWaldo().getLocation() == null && (myLocation == null || myLocation.trim().length() == 0)) {
-				Log.d("Nick: onPreExecute()", "Show location error");
-				AlertDialog.Builder builder = new AlertDialog.Builder(PlacesSearchActivity.this);
-				builder.setMessage("Unable to determine your location. Please ensure a 'My Location Source' is enabled in System Settings - Security and Location.")
-				       .setCancelable(false)
-				       .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-				           public void onClick(DialogInterface dialog, int id) {
-				        	   dialog.cancel();
-				           }
-				       });
-				AlertDialog alert = builder.create();	
-				alert.show();
+		if (app.getWaldo().getLocation() == null && (myLocation == null || myLocation.trim().length() == 0)) {
+			Log.d("Nick: onPreExecute()", "Show location error");
+			AlertDialog.Builder builder = new AlertDialog.Builder(PlacesSearchActivity.this);
+			builder.setMessage("Unable to determine your location. Please ensure a 'My Location Source' is enabled in System Settings - Security and Location.")
+					.setCancelable(false).setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					});
+			AlertDialog alert = builder.create();
+			alert.show();
 		} else {
 			YelpQuery query = new YelpQuery();
 			query.location = location;
@@ -316,7 +328,7 @@ public class PlacesSearchActivity extends Activity {
 			}
 			new YelpSearchTask().execute(query);
 		}
-		
+
 	}
 
 	private void updatePlacesRowData(List<Business> list) {
@@ -324,7 +336,7 @@ public class PlacesSearchActivity extends Activity {
 	}
 
 	private void redrawPlacesList() {
-		if(placesRowData != null && placesRowData.size() > 0) {
+		if (placesRowData != null && placesRowData.size() > 0) {
 			placesListView.setAdapter(new BusinessAdapter(this, R.layout.places_list_row, placesRowData));
 		}
 	}
@@ -411,7 +423,6 @@ public class PlacesSearchActivity extends Activity {
 
 			return v;
 		}
-
 
 	}
 
