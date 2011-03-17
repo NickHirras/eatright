@@ -1,13 +1,12 @@
-package com.eatrightapp.service.data.v1;
+package com.eatrightapp.service.v1.datastore;
 
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
-public class Restaurant {
+public class RestaurantDSO {
 	@Id String id;
 	Boolean chain;
 	String chainId;
-	@Transient ERAError error;
 	
 	public String getId() {
 		return id;
@@ -26,11 +25,5 @@ public class Restaurant {
 	}
 	public void setChainId(String chainId) {
 		this.chainId = chainId;
-	}
-	public ERAError getError() {
-		return error;
-	}
-	public void setError(ERAError error) {
-		this.error = error;
 	}
 }

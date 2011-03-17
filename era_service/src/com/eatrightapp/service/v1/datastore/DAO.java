@@ -1,4 +1,4 @@
-package com.eatrightapp.service.data.v1;
+package com.eatrightapp.service.v1.datastore;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -11,7 +11,7 @@ public class DAO extends DAOBase {
 	// Please see http://code.google.com/p/objectify-appengine/wiki/IntroductionToObjectify
 	
 	static {
-		ObjectifyService.register(Restaurant.class);
+		ObjectifyService.register(RestaurantDSO.class);
 		// TODO register all data objects here... 
 	}
 	
