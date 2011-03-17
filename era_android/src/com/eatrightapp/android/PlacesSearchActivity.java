@@ -189,7 +189,7 @@ public class PlacesSearchActivity extends Activity {
 		protected Long doInBackground(YelpQuery... params) {
 			yelpQuery = params[0];
 
-			int radius = 5000;
+			int radius = YelpService.SEARCH_RADIUS;
 			int limit = 20;
 			String sort = "1";
 
@@ -203,7 +203,11 @@ public class PlacesSearchActivity extends Activity {
 				if (restaurants.getError() != null) {
 					error = restaurants.getError();
 				}
-				while (error == null && restaurants.getBusinesses().size() < restaurants.getTotal()) {
+				//while (error == null && restaurants.getBusinesses().size() < restaurants.getTotal()) {
+				// ** This was exhasuting my test api limits, so changed to only pull in first batch
+				// of results.  If you want to go back to getting more, change the if(error...) below to
+				// the commented out while(error... above!
+				if(error == null) {
 					YelpSearchResult morePlaces = YelpService.search(lat, lng, myLocation, yelpQuery.term, yelpQuery.categoryFilter, radius, limit, restaurants
 							.getBusinesses().size(), sort);
 					if (morePlaces.getError() != null) {

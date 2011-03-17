@@ -15,15 +15,19 @@
 		<ImageButton android:id="@+id/Restaurant_MapButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_menu_directions"></ImageButton>
 		<ImageButton android:id="@+id/Restaurant_DialButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_menu_call"></ImageButton>
 	</LinearLayout>
-	<View android:layout_width="fill_parent" android:layout_height="8dip"></View>
+	<View android:layout_width="fill_parent" android:layout_height="24dip"></View>
 	<LinearLayout android:id="@+id/Restaurant_LinearLayout04" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-		<ImageView android:id="@+id/Restaurant_RatingImage" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
-		<TextView android:text="@+id/Restaurant_ReviewsQty" android:id="@+id/Restaurant_ReviewsQty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true"></TextView>
+		<ImageView android:id="@+id/Restaurant_RatingImage" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"></ImageView>
+		<View android:layout_height="fill_parent" android:layout_width="8dip"></View>
+		<TextView android:text="@+id/Restaurant_ReviewsQty" android:id="@+id/Restaurant_ReviewsQty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true" android:layout_gravity="center_vertical"></TextView>
 	</LinearLayout>
-	<LinearLayout android:id="@+id/Restaurant_LinearLayout06" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
-		<ImageView android:id="@+id/Restaurant_RatingImage" android:layout_width="wrap_content" android:layout_height="wrap_content"></ImageView>
-		<TextView android:text="@+id/Restaurant_ReviewsQty" android:id="@+id/Restaurant_ReviewsQty" android:layout_width="wrap_content" android:layout_height="wrap_content" android:clickable="true"></TextView>
+	<View android:layout_width="fill_parent" android:layout_height="24dip"></View>
+	<LinearLayout android:id="@+id/Restaurant_NoChainDataExistsPannel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+		<TextView android:text="National chain? " android:id="@+id/Restaurant_ChainSpinnerLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical"></TextView>
+		<Spinner android:layout_height="wrap_content" android:id="@+id/Restaurant_ChainSpinner" android:layout_width="fill_parent"></Spinner>
 	</LinearLayout>
-	<TextView android:text="@+id/Restaurant_Chain" android:id="@+id/Restaurant_Chain" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+	<LinearLayout android:id="@+id/Restaurant_ChainDataExistsPannel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+		<TextView android:text="This is/not a chain restaurant." android:id="@+id/Restaurant_ChainDataLabel" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+		<TextView android:text="Flag as inaccurate." android:id="@+id/Restaurant_ChainDataWrongLink" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>		
+	</LinearLayout> 
 </LinearLayout>
-
