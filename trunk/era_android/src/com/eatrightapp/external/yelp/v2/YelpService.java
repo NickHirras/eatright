@@ -20,6 +20,8 @@ public class YelpService {
 	public final static String CONSUMER_SECRET = "_raqYwj6njZ15sXj4z-CYEDHiHQ";
 	public final static String TOKEN = "eD5hAer1WOGQCtev0G7fQNsnuag2ohyH";
 	public final static String TOKEN_SECRET = "ZHdFNXgEuNbF2-rvCkCuAmtyfsM";
+	
+	public final static int SEARCH_RADIUS = 2500;
 
 	private static Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 

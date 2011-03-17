@@ -11,9 +11,15 @@ import android.text.Html;
 import android.text.util.Linkify;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eatrightapp.android.lazylist.ImageLoader;
 import com.eatrightapp.external.era.v1.ERAService;
@@ -35,9 +41,13 @@ public class RestaurantActivity extends Activity {
 	private TextView snippetTextTV;
 	private ImageView snippetImageIV;
 	private TextView phoneTV;
-	private TextView chainTV;
 	private ImageButton mapBtn;
 	private ImageButton dialBtn;
+	private LinearLayout noChainDataExistsPanel;
+	private Spinner chainSpinner;
+	private LinearLayout chainDataExistsPanel;
+	private TextView chainDataWrongLabelTV;
+	private TextView chainDataWrongLinkTV;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -56,9 +66,13 @@ public class RestaurantActivity extends Activity {
 		reviewsQtyTV = (TextView) findViewById(R.id.Restaurant_ReviewsQty);
 		restaurantImageIV = (ImageView) findViewById(R.id.Restaurant_Image);
 		phoneTV = (TextView) findViewById(R.id.Restaurant_Phone);
-		chainTV = (TextView) findViewById(R.id.Restaurant_Chain);
 		mapBtn = (ImageButton) findViewById(R.id.Restaurant_MapButton);
 		dialBtn = (ImageButton) findViewById(R.id.Restaurant_DialButton);
+		noChainDataExistsPanel = (LinearLayout) findViewById(R.id.Restaurant_NoChainDataExistsPannel);
+		chainSpinner = (Spinner) findViewById(R.id.Restaurant_ChainSpinner);
+		chainDataExistsPanel = (LinearLayout) findViewById(R.id.Restaurant_ChainDataExistsPannel);
+		chainDataWrongLabelTV = (TextView) findViewById(R.id.Restaurant_ChainDataLabel);
+		chainDataWrongLinkTV = (TextView) findViewById(R.id.Restaurant_ChainDataWrongLink);
 		
 		// TODO: This may need to be done in an asynctask with a progress dialog.
 		String restaurantId = getIntent().getExtras().getString("com.eatrightapp.android.PlacesSearchActivity.YelpId");
@@ -111,7 +125,7 @@ public class RestaurantActivity extends Activity {
 		}
 
 		reviewsQtyTV.setAutoLinkMask(Linkify.WEB_URLS);
-		reviewsQtyTV.setText(Html.fromHtml("<a href=" + biz.getMobileUrl() + ">" + biz.getReviewCount() + " Yelp user reviews...</a>"));
+		reviewsQtyTV.setText(Html.fromHtml("<a href=" + biz.getMobileUrl() + ">Read " + biz.getReviewCount() + " Yelp user reviews...</a>"));
 		final String bizMobileLink = biz.getMobileUrl().toExternalForm();
 		reviewsQtyTV.setOnClickListener(new OnClickListener() {
 	
@@ -163,13 +177,53 @@ public class RestaurantActivity extends Activity {
 			});			
 		}
 		
-		if(restaurant != null) {
-			if(restaurant.isChain()) {
-				chainTV.setText("This location is a chain.");
-			} else {
-				chainTV.setText("This is not a chain.");
+		if(restaurant == null || restaurant.isChain() == null) {
+			noChainDataExistsPanel.setVisibility(LinearLayout.VISIBLE);
+			chainDataExistsPanel.setVisibility(LinearLayout.INVISIBLE);
+			ArrayAdapter<CharSequence> chainSpinnerOptions = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item); 
+			chainSpinnerOptions.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			chainSpinner.setAdapter(chainSpinnerOptions);
+			chainSpinnerOptions.add("I don't know");
+			chainSpinnerOptions.add("Yes");
+			chainSpinnerOptions.add("No");
+			chainSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view,
+						int selectedIndex, long selectedItemId) {
+					// TODO Call web service to record value.
+					if(selectedIndex > 0) {
+						Toast.makeText(getApplicationContext(), "We'll make that change, thanks!", Toast.LENGTH_LONG).show();
+					}
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// Do nothing...
+				}
+				
+			});
+		} else {
+			noChainDataExistsPanel.setVisibility(LinearLayout.INVISIBLE);
+			chainDataExistsPanel.setVisibility(LinearLayout.VISIBLE);
+			if(restaurant.isChain().booleanValue() == true) {			
+				chainDataWrongLabelTV.setText(Html.fromHtml("This is a <em>chain restaurant</em>.  "));
+			} else {		
+				chainDataWrongLabelTV.setText(Html.fromHtml("This is not a <em>chain restaurant</em>.  "));
 			}
+			chainDataWrongLinkTV.setAutoLinkMask(Linkify.ALL);
+			chainDataWrongLinkTV.setText(Html.fromHtml("<a href=#>Flag as inaccurate.</a>"));
+			chainDataWrongLinkTV.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Call web service to flag this as inaccurate.			
+					Toast.makeText(getApplicationContext(), "Marked for audit, thanks!", Toast.LENGTH_LONG).show(); 
+				}
+				
+			});
 		}
 				
+		
 	}
 }
