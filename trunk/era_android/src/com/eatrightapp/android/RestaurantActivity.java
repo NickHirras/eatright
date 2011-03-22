@@ -194,6 +194,10 @@ public class RestaurantActivity extends Activity {
 					// TODO Call web service to record value.
 					if(selectedIndex > 0) {
 						Toast.makeText(getApplicationContext(), "We'll make that change, thanks!", Toast.LENGTH_LONG).show();
+						Restaurant restaurant = new Restaurant();
+						restaurant.setId("id1");
+						restaurant.setChain(selectedIndex == 1);
+						ERAService.updateRestaurant(restaurant);
 					}
 				}
 

@@ -4,7 +4,7 @@ public class Restaurant {
 	String id;
 	Boolean chain;
 	String chainId;
-	ERAError error;
+//	ERAError error;
 	
 	public String getId() {
 		return id;
@@ -24,12 +24,12 @@ public class Restaurant {
 	public void setChainId(String chainId) {
 		this.chainId = chainId;
 	}
-	public ERAError getError() {
-		return error;
-	}
-	public void setError(ERAError error) {
-		this.error = error;
-	}
+//	public ERAError getError() {
+//		return error;
+//	}
+//	public void setError(ERAError error) {
+//		this.error = error;
+//	}
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

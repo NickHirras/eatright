@@ -21,16 +21,15 @@ public class ERAService {
 
 	private static Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-	//public final static String server = "http://10.0.2.2:8888";
-	public final static String server = "http://homeweb.org:8888";
+	public final static String server = "http://10.0.2.2:8888";
+	//public final static String server = "http://homeweb.org:8888";
 
 	public static Restaurant findRestaurant(String id) {
-		String service = server + "/api/v1/restaurants/";
+		String service = server + "/v1/api/restaurants/";
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 			
-			Log.d(ERAService.class.getName(), "calling " + service + id);
 			HttpGet httpget = new HttpGet(service + id);
 			HttpResponse response = httpclient.execute(httpget);
 			HttpEntity entity = response.getEntity();
@@ -57,6 +56,10 @@ public class ERAService {
 	}
 	
 	public static void updateRestaurant(Restaurant restaurant) {
+		System.err.println("updateRestaurant");
+		System.err.println("restaurant = " + restaurant.getId());
+		System.err.println("chain = " + restaurant.isChain());
+		System.err.println("chainId = " + restaurant.getChainId());
 		
 	}
 	
