@@ -2,12 +2,15 @@ package com.eatrightapp.service.v1.api;
 
 import java.util.logging.Logger;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.eatrightapp.service.v1.datastore.DAO;
@@ -27,8 +30,6 @@ public class RestaurantService {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public RestaurantDSO getRestaurant(@PathParam("id") String id) {
-		Logger.getAnonymousLogger().fine("Entering RestaurantService.getRestaurant");
-
 		DAO dao = new DAO();
 
 		RestaurantDSO rest = dao.ofy().get(new Key<RestaurantDSO>(RestaurantDSO.class, id));
@@ -37,13 +38,14 @@ public class RestaurantService {
 	}
 
 	
-//	@POST
-//	@Path("update")
-//	@Consumes("text/plain")
-//	@Produces("text/plain")
-//	public static String updateRestaurant(@Context Request request) {
-//		DAO dao = new DAO();
-//		Restaurant restaurant = dao.gson().fromJson(request., Restaurant.class);
-//		return "You sent me restaurant " + restaurant.getId() + " with chain value of " + restaurant.isChain();
-//	}
+	@POST
+	@Path("update")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateRestaurant(Restaurant restaurant) {
+		System.err.println("RestaurantService.updateRestaurant");
+		System.err.println("Restaurant = " + restaurant.getId());
+		System.err.println("Chain = " + restaurant.isChain());
+		return null;
+	}
 }
