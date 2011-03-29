@@ -22,8 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eatrightapp.android.lazylist.ImageLoader;
-import com.eatrightapp.external.era.v1.ERAService;
-import com.eatrightapp.external.era.v1.Restaurant;
+import com.eatrightapp.external.era.ERAService;
+import com.eatrightapp.external.era.RestaurantInfo;
 import com.eatrightapp.external.yelp.v2.BusinessDetail;
 import com.eatrightapp.external.yelp.v2.YelpService;
 
@@ -76,8 +76,8 @@ public class RestaurantActivity extends Activity {
 		
 		// TODO: This may need to be done in an asynctask with a progress dialog.
 		String restaurantId = getIntent().getExtras().getString("com.eatrightapp.android.PlacesSearchActivity.YelpId");
-		BusinessDetail biz = YelpService.findBusiness(restaurantId);
-		Restaurant restaurant = ERAService.findRestaurant(restaurantId);
+		final BusinessDetail biz = YelpService.findBusiness(restaurantId);
+		RestaurantInfo restaurantInfo = ERAService.findRestaurantInfo(restaurantId);
 		
 		restaurantNameTV.setText(biz.getName());
 		
@@ -177,7 +177,7 @@ public class RestaurantActivity extends Activity {
 			});			
 		}
 		
-		if(restaurant == null || restaurant.isChain() == null) {
+		if(restaurantInfo == null) {
 			noChainDataExistsPanel.setVisibility(LinearLayout.VISIBLE);
 			chainDataExistsPanel.setVisibility(LinearLayout.INVISIBLE);
 			ArrayAdapter<CharSequence> chainSpinnerOptions = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item); 
@@ -194,10 +194,11 @@ public class RestaurantActivity extends Activity {
 					// TODO Call web service to record value.
 					if(selectedIndex > 0) {
 						Toast.makeText(getApplicationContext(), "We'll make that change, thanks!", Toast.LENGTH_LONG).show();
-						Restaurant restaurant = new Restaurant();
-						restaurant.setId("id1");
-						restaurant.setChain(selectedIndex == 1);
-						ERAService.updateRestaurant(restaurant);
+						RestaurantInfo restaurantInfo = new RestaurantInfo();
+						restaurantInfo.setId(biz.getId());
+						restaurantInfo.setFranchise(selectedIndex == 1);
+						restaurantInfo.setFranchiseId(biz.getFranchiseId());
+						ERAService.updateRestaurantFranchise(restaurantInfo.getId(), restaurantInfo.isFranchise(), restaurantInfo.getFranchiseId());
 					}
 				}
 
@@ -210,10 +211,10 @@ public class RestaurantActivity extends Activity {
 		} else {
 			noChainDataExistsPanel.setVisibility(LinearLayout.INVISIBLE);
 			chainDataExistsPanel.setVisibility(LinearLayout.VISIBLE);
-			if(restaurant.isChain().booleanValue() == true) {			
+			if(restaurantInfo.isFranchise()) {			
 				chainDataWrongLabelTV.setText(Html.fromHtml("This is a <em>chain restaurant</em>.  "));
 			} else {		
-				chainDataWrongLabelTV.setText(Html.fromHtml("This is not a <em>chain restaurant</em>.  "));
+				chainDataWrongLabelTV.setText(Html.fromHtml("This is not a <em>local restaurant</em>.  "));
 			}
 			chainDataWrongLinkTV.setAutoLinkMask(Linkify.ALL);
 			chainDataWrongLinkTV.setText(Html.fromHtml("<a href=#>Flag as inaccurate.</a>"));

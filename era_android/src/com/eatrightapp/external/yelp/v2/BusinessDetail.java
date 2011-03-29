@@ -3,6 +3,8 @@ package com.eatrightapp.external.yelp.v2;
 import java.net.URL;
 import java.util.List;
 
+import com.eatrightapp.util.Convert;
+
 public class BusinessDetail {
 	private String id;
 	private String name;
@@ -165,5 +167,23 @@ public class BusinessDetail {
 
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
+	}
+
+	public String getFranchiseId() {
+		String franchiseId = getId();
+		
+		// What's the city, as Yelp would present it?
+		String city = Convert.yelpifiedIdString(getLocation().getCity());
+		
+		// Find the last occurrence of that in the id.
+		int index = franchiseId.lastIndexOf("-" + city);
+		
+		// If we didn't find it, our assumptions are bad or data has been manually manipulated and no
+		// longer matches the pattern of: restuarant_id-city-...
+		if(index > 0) {
+			franchiseId = franchiseId.substring(0, index);
+		}
+		
+		return franchiseId;
 	}
 }
