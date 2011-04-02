@@ -10,6 +10,9 @@ public class DAO extends DAOBase {
 
 	static {
 		ObjectifyService.register(RestaurantInfo.class);
+		ObjectifyService.register(ERAUser.class);
+		ObjectifyService.register(Dish.class);
+		ObjectifyService.register(DishTag.class);
 		// TODO register all data objects here...
 	}
 
