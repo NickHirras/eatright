@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Dish_Layout" android:orientation="vertical">
+    <TextView android:layout_height="wrap_content" android:id="@+id/Dish_Title" android:layout_width="fill_parent" android:text="Title of Dish"></TextView>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:orientation="horizontal">
+	    <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/linearLayout2" android:orientation="vertical">
+	        <TextView android:layout_height="wrap_content" android:id="@+id/textView2" android:layout_width="fill_parent" android:text="Description of this dish, including ordering instructions."></TextView>
+	        <TextView android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_width="fill_parent" android:text="Calories, Fat, Protein, etc."></TextView>
+	    </LinearLayout>
+        <ImageView android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_width="wrap_content" android:src="@drawable/stub"></ImageView>
+    </LinearLayout>
+    
+</LinearLayout>

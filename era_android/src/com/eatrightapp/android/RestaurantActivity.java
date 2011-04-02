@@ -1,5 +1,7 @@
 package com.eatrightapp.android;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -9,8 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.util.Linkify;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -22,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eatrightapp.android.lazylist.ImageLoader;
+import com.eatrightapp.external.era.Dish;
 import com.eatrightapp.external.era.ERAService;
 import com.eatrightapp.external.era.RestaurantInfo;
 import com.eatrightapp.external.yelp.v2.BusinessDetail;
@@ -30,7 +35,7 @@ import com.eatrightapp.external.yelp.v2.YelpService;
 public class RestaurantActivity extends Activity {
 
 	private EatRightApp app;
-
+ 
 	private ImageLoader imageLoader;
 		
 	private TextView restaurantNameTV;
@@ -40,7 +45,7 @@ public class RestaurantActivity extends Activity {
 	private ImageView restaurantImageIV;
 	private TextView snippetTextTV;
 	private ImageView snippetImageIV;
-	private TextView phoneTV;
+	private TextView phoneTV; 
 	private ImageButton mapBtn;
 	private ImageButton dialBtn;
 	private LinearLayout noChainDataExistsPanel;
@@ -48,6 +53,22 @@ public class RestaurantActivity extends Activity {
 	private LinearLayout chainDataExistsPanel;
 	private TextView chainDataWrongLabelTV;
 	private TextView chainDataWrongLinkTV;
+	private LinearLayout dishesLayout;
+	
+	private LinearLayout dishRow(Dish dish, ViewGroup parent) {
+		LayoutInflater myInflater = getLayoutInflater(); 
+		View myView = myInflater.inflate(R.layout.dish, parent, false); 
+
+		LinearLayout dishLayout;
+		TextView dishTitleTV;
+
+		dishLayout = (LinearLayout) myView.findViewById(R.id.Dish_Layout);
+		dishTitleTV = (TextView) myView.findViewById(R.id.Dish_Title);
+
+		dishTitleTV.setText(dish.getTitle());
+		
+		return dishLayout;
+	}
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -73,11 +94,16 @@ public class RestaurantActivity extends Activity {
 		chainDataExistsPanel = (LinearLayout) findViewById(R.id.Restaurant_ChainDataExistsPannel);
 		chainDataWrongLabelTV = (TextView) findViewById(R.id.Restaurant_ChainDataLabel);
 		chainDataWrongLinkTV = (TextView) findViewById(R.id.Restaurant_ChainDataWrongLink);
-		
+		dishesLayout = (LinearLayout) findViewById(R.id.Restaurant_DishesLayout);
+
 		// TODO: This may need to be done in an asynctask with a progress dialog.
 		String restaurantId = getIntent().getExtras().getString("com.eatrightapp.android.PlacesSearchActivity.YelpId");
 		final BusinessDetail biz = YelpService.findBusiness(restaurantId);
 		RestaurantInfo restaurantInfo = ERAService.findRestaurantInfo(restaurantId);
+		List<Dish> dishes = null;
+		if(restaurantInfo != null) {
+			dishes = ERAService.findDishes(restaurantInfo.isFranchise(), restaurantInfo.isFranchise() ? restaurantInfo.getFranchiseId() : restaurantInfo.getId());
+		}
 		
 		restaurantNameTV.setText(biz.getName());
 		
@@ -136,7 +162,6 @@ public class RestaurantActivity extends Activity {
 			}
 			
 		});
-		
 		
 		if(biz.getImageUrl() != null) {
 			restaurantImageIV.setTag(biz.getImageUrl().toExternalForm());
@@ -200,7 +225,7 @@ public class RestaurantActivity extends Activity {
 						restaurantInfo.setFranchiseId(biz.getFranchiseId());
 						ERAService.updateRestaurantFranchise(restaurantInfo.getId(), restaurantInfo.isFranchise(), restaurantInfo.getFranchiseId());
 					}
-				}
+				} 
 
 				@Override
 				public void onNothingSelected(AdapterView<?> arg0) {
@@ -214,7 +239,7 @@ public class RestaurantActivity extends Activity {
 			if(restaurantInfo.isFranchise()) {			
 				chainDataWrongLabelTV.setText(Html.fromHtml("This is a <em>chain restaurant</em>.  "));
 			} else {		
-				chainDataWrongLabelTV.setText(Html.fromHtml("This is not a <em>local restaurant</em>.  "));
+				chainDataWrongLabelTV.setText(Html.fromHtml("This is not a <em>chain restaurant</em>.  "));
 			}
 			chainDataWrongLinkTV.setAutoLinkMask(Linkify.ALL);
 			chainDataWrongLinkTV.setText(Html.fromHtml("<a href=#>Flag as inaccurate.</a>"));
@@ -228,7 +253,12 @@ public class RestaurantActivity extends Activity {
 				
 			});
 		}
-				
+
+		if(dishes != null) {
+			for(Dish dish : dishes) {
+				dishesLayout.addView(dishRow(dish, dishesLayout));
+			}
+		}
 		
 	}
 }
