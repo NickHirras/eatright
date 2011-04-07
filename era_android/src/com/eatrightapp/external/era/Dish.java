@@ -14,10 +14,10 @@ public class Dish {
 	private boolean flagged;
 	private String whoFlagged;
 	private String whyFlagged;
-	private int calories;
-	private int protein;
-	private int fat;
-	private int carbs;
+	private Integer calories;
+	private Integer protein;
+	private Integer fat;
+	private Integer carbs;
 	private int likes;
 	private int dislikes;
 
@@ -134,11 +134,11 @@ public class Dish {
 		return whoFlagged;
 	}
 
-	public int getCalories() {
+	public Integer getCalories() {
 		return calories;
 	}
 
-	public void setCalories(int calories) {
+	public void setCalories(Integer calories) {
 		this.calories = calories;
 	}
 

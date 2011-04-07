@@ -4,13 +4,16 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,9 +21,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +39,8 @@ import com.eatrightapp.external.yelp.v2.YelpService;
 
 public class RestaurantActivity extends Activity {
 
+	static final int DIALOG_RATE_DISH = 0;
+	
 	private EatRightApp app;
  
 	private ImageLoader imageLoader;
@@ -58,15 +65,85 @@ public class RestaurantActivity extends Activity {
 	private LinearLayout dishRow(Dish dish, ViewGroup parent) {
 		LayoutInflater myInflater = getLayoutInflater(); 
 		View myView = myInflater.inflate(R.layout.dish, parent, false); 
-
+		
 		LinearLayout dishLayout;
 		TextView dishTitleTV;
+		TextView dishDescriptionTV;
+		TextView dishNutrientsTV;
+		Button flagBtn;
+		ImageView dishImage;
+		RatingBar dishRating;
+		TextView dishHowManyLikesTV;
+		Button rateBtn;
 
 		dishLayout = (LinearLayout) myView.findViewById(R.id.Dish_Layout);
 		dishTitleTV = (TextView) myView.findViewById(R.id.Dish_Title);
+		dishDescriptionTV = (TextView) myView.findViewById(R.id.Dish_Description);
+		dishNutrientsTV = (TextView) myView.findViewById(R.id.Dish_Nutrients);
+		flagBtn = (Button) myView.findViewById(R.id.Dish_FlagBtn);
+		dishImage = (ImageView) myView.findViewById(R.id.Dish_Image);
+		dishRating = (RatingBar) myView.findViewById(R.id.Dish_RatingBar);
+		dishHowManyLikesTV = (TextView) myView.findViewById(R.id.Dish_HowManyLikes);
+		rateBtn = (Button) myView.findViewById(R.id.Dish_RateBtn);
 
 		dishTitleTV.setText(dish.getTitle());
+		dishDescriptionTV.setText(dish.getDescription());
 		
+		StringBuilder nutrients = new StringBuilder();
+		if(dish.getCalories() != null) { 
+			nutrients.append(dish.getCalories()).append(" cals ");
+		}
+		if(dish.getProtein() != null) {
+			nutrients.append(dish.getProtein()).append("g protein ");
+		}
+		if(dish.getFat() != null) {
+			nutrients.append(dish.getFat()).append("g fat ");
+		}
+		if(dish.getCarbs() != null) {
+			nutrients.append(dish.getCarbs()).append("g carbs");
+		}
+		dishNutrientsTV.setText(nutrients.toString());
+		 
+		// TODO add action for flag btn
+		
+		// TODO: add image
+		
+		float likes = dish.getLikes() != null ? dish.getLikes().floatValue() : 0.0f;
+		float dislikes = dish.getDislikes() != null ? dish.getDislikes().floatValue() : 0.0f;
+		float stars = (likes/(likes+dislikes)) * 5.0f;
+		if(likes + dislikes > 0) {
+			dishRating.setRating(stars);
+			float rating = (likes/(likes+dislikes)) * 100.0f;
+			dishHowManyLikesTV.setText(Math.round(rating) + "% recommended");
+		} else {
+			dishHowManyLikesTV.setText("Not yet rated.");
+		}
+		
+		
+		// TODO: add rate btn
+		rateBtn.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				showDialog(DIALOG_RATE_DISH);
+//				AlertDialog.Builder builder;
+//				AlertDialog alertDialog;
+//
+//				Context mContext = getApplicationContext();
+//				LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+//				View layout = inflater.inflate(R.layout.rate_dish_dialog,
+//				                               (ViewGroup) findViewById(R.id.RateDish_LayoutRoot));
+//
+////				TextView text = (TextView) layout.findViewById(R.id.text);
+////				text.setText("Hello, this is a custom dialog!");
+////				ImageView image = (ImageView) layout.findViewById(R.id.image);
+////				image.setImageResource(R.drawable.android);
+//
+//				builder = new AlertDialog.Builder(mContext);
+//				builder.setView(layout);
+//				alertDialog = builder.create();
+//				alertDialog.show();
+
+			}
+		});
 		return dishLayout;
 	}
 	
@@ -260,5 +337,27 @@ public class RestaurantActivity extends Activity {
 			}
 		}
 		
+	}
+	
+	protected Dialog onCreateDialog(int id) {
+	    Dialog dialog;
+	    switch(id) {
+	    case DIALOG_RATE_DISH:
+			//Context mContext = app.getApplicationContext();
+			dialog = new Dialog(this);
+
+			dialog.setContentView(R.layout.rate_dish_dialog);
+			dialog.setTitle("Rate This Dish");
+
+//			TextView text = (TextView) dialog.findViewById(R.id.text);
+//			text.setText("Hello, this is a custom dialog!");
+//			ImageView image = (ImageView) dialog.findViewById(R.id.image);
+//			image.setImageResource(R.drawable.android);
+
+	        break;
+	    default:
+	        dialog = null;
+	    }
+	    return dialog;
 	}
 }
