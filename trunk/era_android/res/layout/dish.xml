@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Dish_Layout" android:orientation="vertical">
-    <TextView android:layout_height="wrap_content" android:id="@+id/Dish_Title" android:layout_width="fill_parent" android:text="Title of Dish"></TextView>
-    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/linearLayout1" android:orientation="horizontal">
-	    <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:id="@+id/linearLayout2" android:orientation="vertical">
-	        <TextView android:layout_height="wrap_content" android:id="@+id/textView2" android:layout_width="fill_parent" android:text="Description of this dish, including ordering instructions."></TextView>
-	        <TextView android:layout_height="wrap_content" android:id="@+id/textView1" android:layout_width="fill_parent" android:text="Calories, Fat, Protein, etc."></TextView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/Dish_Layout" android:orientation="vertical" android:paddingTop="8px" android:paddingBottom="8px" android_paddingLeft="4px" android:paddingRight="4px">
+    <TextView android:layout_height="wrap_content" android:id="@+id/Dish_Title" android:layout_width="fill_parent" android:text="Title of Dish"  android:textStyle="bold" android:textSize="20px"></TextView>
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/Dish_linearLayout1" android:orientation="horizontal">
+	    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/Dish_linearLayout2" android:orientation="vertical">
+	        <TextView android:layout_height="wrap_content" android:id="@+id/Dish_Description" android:layout_width="fill_parent" android:text="Description of this dish, including ordering instructions." android:textSize="14px"></TextView>
+	        <TextView android:layout_height="wrap_content" android:id="@+id/Dish_Nutrients" android:layout_width="fill_parent" android:text="Calories, Fat, Protein, etc."  android:textStyle="italic" android:textSize="12px"></TextView>
+	    <Button android:text="Flag" android:id="@+id/Dish_FlagBtn" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
 	    </LinearLayout>
-        <ImageView android:layout_height="wrap_content" android:id="@+id/imageView1" android:layout_width="wrap_content" android:src="@drawable/stub"></ImageView>
+        <ImageView android:layout_height="wrap_content" android:id="@+id/Dish_Image" android:layout_width="wrap_content" android:src="@drawable/stub"></ImageView>
     </LinearLayout>
-    
+    <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:id="@+id/Dish_linearLayout3" android:orientation="horizontal">
+		<RatingBar android:id="@+id/Dish_RatingBar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:numStars="5" android:stepSize="0.5" style="?android:attr/ratingBarStyleSmall" android:layout_gravity="center_vertical"/>
+		<TextView android:layout_height="wrap_content" android:id="@+id/Dish_HowManyLikes" android:layout_width="wrap_content" android:text="47% recommended"  android:textStyle="italic" android:textSize="14px"></TextView>
+	    <Button android:text="Rate It" android:id="@+id/Dish_RateBtn" android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+	</LinearLayout>
 </LinearLayout>

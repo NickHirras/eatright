@@ -137,7 +137,10 @@ public class ERAService {
 					Log.d(ERAService.class.getName() + ".findDishes()", result);
 
 					DishSearchResult dishes = gson.fromJson(result, DishSearchResult.class);
-
+					
+					if(dishes == null) {
+						return null;
+					}
 					return dishes.getDish();
 				default:
 					return null;
