@@ -22,7 +22,6 @@ public class Dish {
 	private int fat;
 	private int carbs;
 	private int likes;
-
 	private int dislikes;
 	
 	public Dish() {

@@ -13,8 +13,10 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.eatrightapp.service.api.converter.DishConverter;
 import com.eatrightapp.service.api.converter.RestaurantInfoConverter;
 import com.eatrightapp.service.api.model.DAO;
+import com.eatrightapp.service.api.model.Dish;
 import com.eatrightapp.service.api.model.RestaurantInfo;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.NotFoundException;
@@ -39,7 +41,7 @@ public class RestaurantInfoService {
 		}
 
 	}
-
+	
 	@POST
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
