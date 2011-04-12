@@ -11,6 +11,7 @@
             </intent-filter>
         </activity>
     	<activity android:name="RestaurantActivity" android:configChanges="keyboardHidden|orientation"></activity> 
+    	<activity android:name="CreateDishActivity" android:configChanges="keyboardHidden|orientation"></activity> 
     </application>
     
     <uses-sdk android:minSdkVersion="3" />

@@ -25,6 +25,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,7 +41,8 @@ import com.eatrightapp.external.yelp.v2.YelpService;
 
 public class RestaurantActivity extends Activity {
 
-	static final int DIALOG_RATE_DISH = 0;
+	static final int DIALOG_RATE_DISH = 1;
+	static final int DIALOG_FLAG_DISH = 2;
 	
 	private EatRightApp app;
  
@@ -61,8 +64,12 @@ public class RestaurantActivity extends Activity {
 	private TextView chainDataWrongLabelTV;
 	private TextView chainDataWrongLinkTV;
 	private LinearLayout dishesLayout;
+	private Dish selectedDish;
+	private Button createDishButton;
+	private BusinessDetail biz;
+	private RestaurantInfo restaurantInfo;
 	
-	private LinearLayout dishRow(Dish dish, ViewGroup parent) {
+	private LinearLayout dishRow(final Dish dish, ViewGroup parent) {
 		LayoutInflater myInflater = getLayoutInflater(); 
 		View myView = myInflater.inflate(R.layout.dish, parent, false); 
 		
@@ -70,7 +77,7 @@ public class RestaurantActivity extends Activity {
 		TextView dishTitleTV;
 		TextView dishDescriptionTV;
 		TextView dishNutrientsTV;
-		Button flagBtn;
+		TextView flagLnk;
 		ImageView dishImage;
 		RatingBar dishRating;
 		TextView dishHowManyLikesTV;
@@ -80,13 +87,24 @@ public class RestaurantActivity extends Activity {
 		dishTitleTV = (TextView) myView.findViewById(R.id.Dish_Title);
 		dishDescriptionTV = (TextView) myView.findViewById(R.id.Dish_Description);
 		dishNutrientsTV = (TextView) myView.findViewById(R.id.Dish_Nutrients);
-		flagBtn = (Button) myView.findViewById(R.id.Dish_FlagBtn);
+		flagLnk = (TextView) myView.findViewById(R.id.Dish_FlagLnk);
 		dishImage = (ImageView) myView.findViewById(R.id.Dish_Image);
 		dishRating = (RatingBar) myView.findViewById(R.id.Dish_RatingBar);
 		dishHowManyLikesTV = (TextView) myView.findViewById(R.id.Dish_HowManyLikes);
 		rateBtn = (Button) myView.findViewById(R.id.Dish_RateBtn);
 
 		dishTitleTV.setText(dish.getTitle());
+		
+		flagLnk.setText(Html.fromHtml("<a href=#>Flag</a>"));
+		flagLnk.setClickable(true);
+		flagLnk.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				selectedDish = dish;
+				showDialog(DIALOG_FLAG_DISH);
+			}			
+		});
+		
 		dishDescriptionTV.setText(dish.getDescription());
 		
 		StringBuilder nutrients = new StringBuilder();
@@ -102,9 +120,8 @@ public class RestaurantActivity extends Activity {
 		if(dish.getCarbs() != null) {
 			nutrients.append(dish.getCarbs()).append("g carbs");
 		}
+		nutrients.append("  ");
 		dishNutrientsTV.setText(nutrients.toString());
-		 
-		// TODO add action for flag btn
 		
 		// TODO: add image
 		
@@ -114,7 +131,8 @@ public class RestaurantActivity extends Activity {
 		if(likes + dislikes > 0) {
 			dishRating.setRating(stars);
 			float rating = (likes/(likes+dislikes)) * 100.0f;
-			dishHowManyLikesTV.setText(Math.round(rating) + "% recommended");
+			//dishHowManyLikesTV.setText(Math.round(rating) + "% recommended");
+			dishHowManyLikesTV.setText("  " + dish.getLikes() + " liked, " + dish.getDislikes() + " didn't  ");
 		} else {
 			dishHowManyLikesTV.setText("Not yet rated.");
 		}
@@ -123,25 +141,8 @@ public class RestaurantActivity extends Activity {
 		// TODO: add rate btn
 		rateBtn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				selectedDish = dish;
 				showDialog(DIALOG_RATE_DISH);
-//				AlertDialog.Builder builder;
-//				AlertDialog alertDialog;
-//
-//				Context mContext = getApplicationContext();
-//				LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-//				View layout = inflater.inflate(R.layout.rate_dish_dialog,
-//				                               (ViewGroup) findViewById(R.id.RateDish_LayoutRoot));
-//
-////				TextView text = (TextView) layout.findViewById(R.id.text);
-////				text.setText("Hello, this is a custom dialog!");
-////				ImageView image = (ImageView) layout.findViewById(R.id.image);
-////				image.setImageResource(R.drawable.android);
-//
-//				builder = new AlertDialog.Builder(mContext);
-//				builder.setView(layout);
-//				alertDialog = builder.create();
-//				alertDialog.show();
-
 			}
 		});
 		return dishLayout;
@@ -172,11 +173,12 @@ public class RestaurantActivity extends Activity {
 		chainDataWrongLabelTV = (TextView) findViewById(R.id.Restaurant_ChainDataLabel);
 		chainDataWrongLinkTV = (TextView) findViewById(R.id.Restaurant_ChainDataWrongLink);
 		dishesLayout = (LinearLayout) findViewById(R.id.Restaurant_DishesLayout);
+		createDishButton = (Button) findViewById(R.id.Restaurant_CreateDishBtn);
 
 		// TODO: This may need to be done in an asynctask with a progress dialog.
 		String restaurantId = getIntent().getExtras().getString("com.eatrightapp.android.PlacesSearchActivity.YelpId");
-		final BusinessDetail biz = YelpService.findBusiness(restaurantId);
-		RestaurantInfo restaurantInfo = ERAService.findRestaurantInfo(restaurantId);
+		biz = YelpService.findBusiness(restaurantId);
+		restaurantInfo = ERAService.findRestaurantInfo(restaurantId);
 		List<Dish> dishes = null;
 		if(restaurantInfo != null) {
 			dishes = ERAService.findDishes(restaurantInfo.isFranchise(), restaurantInfo.isFranchise() ? restaurantInfo.getFranchiseId() : restaurantInfo.getId());
@@ -337,24 +339,94 @@ public class RestaurantActivity extends Activity {
 			}
 		}
 		
+		createDishButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Log.d(getClass().getName(), "Starting CreateDishActivity");
+				Intent createDish = new Intent();
+				createDish.setClassName("com.eatrightapp.android", "com.eatrightapp.android.CreateDishActivity");
+				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.restaurantId", restaurantInfo.getId());
+				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.franchiseId", restaurantInfo.getFranchiseId());
+				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.isFranchise", restaurantInfo.isFranchise());
+				startActivity(createDish);
+
+			}			
+		});
+		
 	}
 	
 	protected Dialog onCreateDialog(int id) {
 	    Dialog dialog;
 	    switch(id) {
-	    case DIALOG_RATE_DISH:
+	    case DIALOG_RATE_DISH: {
 			//Context mContext = app.getApplicationContext();
 			dialog = new Dialog(this);
 
 			dialog.setContentView(R.layout.rate_dish_dialog);
 			dialog.setTitle("Rate This Dish");
 
-//			TextView text = (TextView) dialog.findViewById(R.id.text);
-//			text.setText("Hello, this is a custom dialog!");
-//			ImageView image = (ImageView) dialog.findViewById(R.id.image);
-//			image.setImageResource(R.drawable.android);
+			Button saveBtn = (Button) dialog.findViewById(R.id.RateDish_SaveBtn);
+			Button cancelBtn = (Button) dialog.findViewById(R.id.RateDish_CancelBtn);
+			final RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.RateDish_RadioGroup);
+			RadioButton likeRdo = (RadioButton) dialog.findViewById(R.id.RateDish_LikeRadio);
+			RadioButton dislikeRdo = (RadioButton) dialog.findViewById(R.id.RateDish_DislikeRadio);
+						
+			saveBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Dish result = ERAService.rateDish(selectedDish.getId(), radioGroup.getCheckedRadioButtonId() == R.id.RateDish_LikeRadio);
+					radioGroup.clearCheck();
+					dismissDialog(DIALOG_RATE_DISH);
+					if(result != null && result.getId() == selectedDish.getId()) {
+						Toast.makeText(RestaurantActivity.this, "Rating saved.", Toast.LENGTH_LONG).show();
+					} else {
+						Toast.makeText(RestaurantActivity.this, "Error, try again later.", Toast.LENGTH_LONG).show();
+					}
+				}				
+			});
+			
+			cancelBtn.setOnClickListener(new OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+					radioGroup.clearCheck();
+					dismissDialog(DIALOG_RATE_DISH);
+				}
+			});
+	       break;
+	    }
+	    case DIALOG_FLAG_DISH: {
+			dialog = new Dialog(this);
 
-	        break;
+			dialog.setContentView(R.layout.flag_dish_dialog);
+			dialog.setTitle("Flag This Dish");
+
+			Button saveBtn = (Button) dialog.findViewById(R.id.FlagDish_SaveBtn);
+			Button cancelBtn = (Button) dialog.findViewById(R.id.FlagDish_CancelBtn);
+			final RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.FlagDish_RadioGroup);
+						
+			saveBtn.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					ERAService.flagDish(selectedDish.getId(), radioGroup.getCheckedRadioButtonId());
+					radioGroup.clearCheck();
+					dismissDialog(DIALOG_FLAG_DISH);
+//					if(result != null && result.getId() == selectedDish.getId()) {
+						Toast.makeText(RestaurantActivity.this, "Dish flagged.", Toast.LENGTH_LONG).show();
+//					} else {
+//						Toast.makeText(RestaurantActivity.this, "Error, try again later.", Toast.LENGTH_LONG).show();
+//					}
+				}				
+			});
+			
+			cancelBtn.setOnClickListener(new OnClickListener() {				
+				@Override
+				public void onClick(View v) {
+					radioGroup.clearCheck();
+					dismissDialog(DIALOG_FLAG_DISH);
+				}
+			});
+			break;
+	    }
 	    default:
 	        dialog = null;
 	    }
