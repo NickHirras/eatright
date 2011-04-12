@@ -12,4 +12,5 @@ public class DishSearchResult {
 	public void setDish(List<Dish> dish) {
 		this.dish = dish;
 	}
+		
 }
