@@ -16,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.eatrightapp.service.api.converter.DishConverter;
-import com.eatrightapp.service.api.converter.RestaurantInfoConverter;
 import com.eatrightapp.service.api.model.DAO;
 import com.eatrightapp.service.api.model.Dish;
 import com.eatrightapp.service.api.model.RestaurantInfo;
@@ -34,11 +33,16 @@ public class DishService {
 		try {
 			DAO dao = new DAO();
 			Objectify ofy = dao.ofy();
+			List<DishConverter> results;
 			if(franchise) {
-				return DishConverter.wrap(ofy.query(Dish.class).filter("franchiseId", id).list());
+				results = DishConverter.wrap(ofy.query(Dish.class).filter("franchiseId", id).list());
 			} else {
-				return DishConverter.wrap(ofy.query(Dish.class).filter("restaurantId", id).list());
+				results = DishConverter.wrap(ofy.query(Dish.class).filter("restaurantId", id).list());
 			}
+			if(results != null && results.size() > 0) {
+				results.add(new DishConverter());
+			}
+			return results;
 		} catch (NotFoundException nfe) {
 			throw new WebApplicationException(Response.Status.NOT_FOUND);
 		}
