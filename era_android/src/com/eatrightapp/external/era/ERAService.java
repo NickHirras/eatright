@@ -173,12 +173,18 @@ public class ERAService {
 					String result = EntityUtils.toString(entity);	
 					Log.d(ERAService.class.getName() + ".findDishes()", result);
 
-					DishSearchResult dishes = gson.fromJson(result, DishSearchResult.class);
+					DishSearchResult results = gson.fromJson(result, DishSearchResult.class);
 					
-					if(dishes == null) {
+					if(results == null) {
 						return null;
 					}
-					return dishes.getDish();
+					
+					List<Dish> dishes = results.getDish();
+					if(dishes.size() > 0) {
+						dishes.remove(dishes.size()-1);
+					}
+					
+					return dishes;
 				default:
 					return null;
 			}
