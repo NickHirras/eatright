@@ -1,7 +1,6 @@
 package com.eatrightapp.external.era;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +13,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
@@ -25,7 +23,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
 public class ERAService {
 
@@ -112,8 +109,48 @@ public class ERAService {
 		
 	}
 	
+	public static void flagDish(Long dishId, int flag) {
+		// TODO implement flagDish(dishId, flag)
+	}
+	
 	public static void flagRestaurantFranchise(String id) {
+		// TODO implement flagRestaurantFranchise(id)
+	}
+	
+	public static Dish rateDish(Long dishId, boolean recommended) {
+		String service = server + "/api/dishes/rate";
+	    
+		HttpClient httpclient = new DefaultHttpClient();
+	    HttpPost httppost = new HttpPost(service);
+
+	    try {
+	    	httppost.setHeader("Accept", "application/json");
+	        // Add your data
+	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+	        nameValuePairs.add(new BasicNameValuePair("dishId", Long.toString(dishId)));
+	        nameValuePairs.add(new BasicNameValuePair("recommended", Boolean.toString(recommended)));
+	        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+	        // Execute HTTP Post Request
+	        HttpResponse response = httpclient.execute(httppost);
+	        HttpEntity entity = response.getEntity();
+			String result = EntityUtils.toString(entity);	
+			Log.d(ERAService.class.getName() + ".rateDish()", result);
+			Dish dish = gson.fromJson(result, Dish.class);
+			return dish;
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(JsonSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		return null;
 	}
 	
 	public static List<Dish> findDishes(boolean franchise, String id) {
@@ -162,5 +199,56 @@ public class ERAService {
 	}
 	
 
+	public static Dish createDish(
+			String restaurantId,
+			String franchiseId,
+			String title,
+			String description,
+			int calories,
+			int protein,
+			int fat,
+			int carbs) {
+		String service = server + "/api/dishes/create";
+	    
+		HttpClient httpclient = new DefaultHttpClient();
+	    HttpPut httpput = new HttpPut(service);
+
+	    try {
+	    	httpput.setHeader("Accept", "application/json");
+	        // Add your data
+	        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+//	        nameValuePairs.add(new BasicNameValuePair("dishId", Long.toString(dishId)));
+//	        nameValuePairs.add(new BasicNameValuePair("recommended", Boolean.toString(recommended)));
+	        nameValuePairs.add(new BasicNameValuePair("restaurantId", restaurantId));
+	        nameValuePairs.add(new BasicNameValuePair("franchiseId", franchiseId));
+	        nameValuePairs.add(new BasicNameValuePair("title", title));
+	        nameValuePairs.add(new BasicNameValuePair("description", description));
+	        nameValuePairs.add(new BasicNameValuePair("calories", Integer.toString(calories)));
+	        nameValuePairs.add(new BasicNameValuePair("protein", Integer.toString(protein)));
+	        nameValuePairs.add(new BasicNameValuePair("fat", Integer.toString(fat)));
+	        nameValuePairs.add(new BasicNameValuePair("carbs", Integer.toString(carbs)));
+	        httpput.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+	        // Execute HTTP Post Request
+	        HttpResponse response = httpclient.execute(httpput);
+	        HttpEntity entity = response.getEntity();
+			String result = EntityUtils.toString(entity);	
+			Log.d(ERAService.class.getName() + ".createDish()", result);
+			Dish dish = gson.fromJson(result, Dish.class);
+			return dish;
+
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch(JsonSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 }
