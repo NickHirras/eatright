@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,22 +69,94 @@ public class CreateDishActivity extends Activity {
 	}
 
 	protected void saveNewDish() {
+		boolean valid = true;
+		
+		StringBuilder problems = new StringBuilder("Oops, please correct: \n");
+		
 		String _restaurantId = restaurantId;
 		String _franchiseId = franchiseId;
 		String _title = title.getText().toString();
 		String _description = description.getText().toString();
-		int _calories = Math.round(Float.parseFloat(calories.getText().toString()));
-		int _protein = Math.round(Float.parseFloat(protein.getText().toString()));
-		int _fat = Math.round(Float.parseFloat(fat.getText().toString()));
-		int _carbs = Math.round(Float.parseFloat(carbohydrates.getText().toString()));
-		Dish dish = ERAService.createDish(_restaurantId, _franchiseId, _title, _description, 
-				_calories, _protein, _fat, _carbs);
+		int _calories = 0;
+		int _protein = 0;
+		int _fat = 0;
+		int _carbs = 0;
 		
-		if(dish == null || dish.getId() == null || dish.getId() == 0) {
-			Toast.makeText(this, "Unable to save, try again later.", Toast.LENGTH_LONG).show();
-		} else {			
-			Toast.makeText(this, "Dish successfully saved!", Toast.LENGTH_LONG).show();
-			finish();
+		if(_title == null || _title.trim().length() == 0) {
+			valid = false;
+			problems.append(" - Title is required.\n");
+		}
+		
+		try {
+			_calories = Math.round(Float.parseFloat(calories.getText().toString()));
+		} catch(Exception ex) {
+			valid = false;
+			problems.append(" - Calories must be a valid number.\n");
+		} finally {
+			if(_calories < 0) {
+				valid = false;
+				problems.append(" - Calories must be at least 0.\n");				
+			}
+		}
+		
+		try {
+			_protein = Math.round(Float.parseFloat(protein.getText().toString()));
+		} catch(Exception ex) {
+			valid = false;
+			problems.append(" - Protein must be a valid number.\n");
+		} finally {
+			if(_protein < 0) {
+				valid = false;
+				problems.append(" - Protein must be at least 0.\n");
+			}
+		}
+		
+		try {
+			_fat = Math.round(Float.parseFloat(fat.getText().toString()));
+		} catch(Exception ex) {
+			valid = false;
+			problems.append(" - Fat must be a valid number.\n");
+		} finally {
+			if(_fat < 0) {
+				valid = false;
+				problems.append(" - Fat must be at least 0.\n");
+			}
+		}
+		
+		try {
+			_carbs = Math.round(Float.parseFloat(carbohydrates.getText().toString()));
+		} catch(Exception ex) {
+			valid = false;
+			problems.append(" - Carbs must be a valid number.\n");
+		} finally {
+			if(_carbs < 0) {
+				problems.append(" - Carbs must be at least 0.\n");
+			}
+		}
+		
+		if(valid) {
+					
+			Dish dish = ERAService.createDish(_restaurantId, _franchiseId, _title, _description, 
+					_calories, _protein, _fat, _carbs);
+			
+			if(dish == null || dish.getId() == null || dish.getId() == 0) {
+				Toast.makeText(this, "Unable to save, try again later.", Toast.LENGTH_LONG).show();
+			} else {			
+				Toast.makeText(this, "Dish successfully saved!", Toast.LENGTH_LONG).show();
+				finish();
+			}
+			
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(problems.toString())
+			       .setCancelable(true)
+			       .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+			           public void onClick(DialogInterface dialog, int id) {
+			                dialog.cancel();
+			           }
+			       });
+			AlertDialog alert = builder.create();
+			alert.show();
 		}
 	}
 
