@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -28,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +48,7 @@ public class RestaurantActivity extends Activity {
  
 	private ImageLoader imageLoader;
 		
+	private ScrollView scroller;
 	private TextView restaurantNameTV;
 	private TextView addressTV;
 	private ImageView ratingImageIV;
@@ -159,6 +160,7 @@ public class RestaurantActivity extends Activity {
 		
 		setContentView(R.layout.restaurant);
 		
+		scroller = (ScrollView) findViewById(R.id.Restaurant_Scroller);
 		restaurantNameTV = (TextView) findViewById(R.id.Restaurant_RestaurantName);
 		addressTV = (TextView) findViewById(R.id.Restaurant_Address);
 		ratingImageIV = (ImageView) findViewById(R.id.Restaurant_RatingImage);
@@ -182,6 +184,8 @@ public class RestaurantActivity extends Activity {
 		List<Dish> dishes = null;
 		if(restaurantInfo != null) {
 			dishes = ERAService.findDishes(restaurantInfo.isFranchise(), restaurantInfo.isFranchise() ? restaurantInfo.getFranchiseId() : restaurantInfo.getId());
+		} else {
+			dishes = ERAService.findDishes(false, biz.getId());
 		}
 		
 		restaurantNameTV.setText(biz.getName());
@@ -303,6 +307,8 @@ public class RestaurantActivity extends Activity {
 						restaurantInfo.setFranchise(selectedIndex == 1);
 						restaurantInfo.setFranchiseId(biz.getFranchiseId());
 						ERAService.updateRestaurantFranchise(restaurantInfo.getId(), restaurantInfo.isFranchise(), restaurantInfo.getFranchiseId());
+						startActivity(getIntent()); 
+						finish();
 					}
 				} 
 
@@ -343,13 +349,19 @@ public class RestaurantActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Log.d(getClass().getName(), "Starting CreateDishActivity");
+				
+				String restId = biz.getId();
+				String franchId = biz.getFranchiseId();
+				boolean franchise = restaurantInfo != null ? restaurantInfo.isFranchise() : false;
+								
 				Intent createDish = new Intent();
 				createDish.setClassName("com.eatrightapp.android", "com.eatrightapp.android.CreateDishActivity");
-				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.restaurantId", restaurantInfo.getId());
-				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.franchiseId", restaurantInfo.getFranchiseId());
-				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.isFranchise", restaurantInfo.isFranchise());
+				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.restaurantId", restId);
+				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.franchiseId", franchId);
+				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.isFranchise", franchise);
 				startActivity(createDish);
-
+				startActivity(getIntent()); 
+				finish();
 			}			
 		});
 		
@@ -379,6 +391,8 @@ public class RestaurantActivity extends Activity {
 					dismissDialog(DIALOG_RATE_DISH);
 					if(result != null && result.getId() == selectedDish.getId()) {
 						Toast.makeText(RestaurantActivity.this, "Rating saved.", Toast.LENGTH_LONG).show();
+						startActivity(getIntent()); 
+						finish();
 					} else {
 						Toast.makeText(RestaurantActivity.this, "Error, try again later.", Toast.LENGTH_LONG).show();
 					}
