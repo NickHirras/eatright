@@ -44,6 +44,8 @@ public class RestaurantActivity extends Activity {
 	static final int DIALOG_RATE_DISH = 1;
 	static final int DIALOG_FLAG_DISH = 2;
 	
+	static final int ACTIVITY_CREATE_DISH = 10;
+	
 	private EatRightApp app;
  
 	private ImageLoader imageLoader;
@@ -359,13 +361,20 @@ public class RestaurantActivity extends Activity {
 				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.restaurantId", restId);
 				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.franchiseId", franchId);
 				createDish.putExtra("com.eatrightapp.android.CreateDishActivity.isFranchise", franchise);
-				startActivity(createDish);
-				startActivity(getIntent()); 
-				finish();
+//				startActivity(createDish);
+				startActivityForResult(createDish, ACTIVITY_CREATE_DISH);
 			}			
 		});
 		
 	}
+	
+	protected void onActivityResult(int requestCode, int resultCode,
+            Intent data) {
+        if (requestCode == ACTIVITY_CREATE_DISH) {
+			startActivity(getIntent()); 
+			finish();
+        }
+    }
 	
 	protected Dialog onCreateDialog(int id) {
 	    Dialog dialog;
