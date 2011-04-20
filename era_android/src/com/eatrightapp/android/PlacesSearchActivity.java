@@ -69,7 +69,7 @@ public class PlacesSearchActivity extends Activity {
 		queryText.setText((CharSequence) state.get("queryText"));
 		myLocation = (String) state.get("myLocation");
 	}
-
+    
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class PlacesSearchActivity extends Activity {
 		app = (EatRightApp) getApplication();
 		app.getWaldo().start(getApplicationContext());
 		imageLoader = app.getImageLoader();
-
+ 
 		// setContentView(R.layout.main);
 		setContentView(R.layout.places);
 
