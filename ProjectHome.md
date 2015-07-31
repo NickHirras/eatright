@@ -1,0 +1,1 @@
+Eat Right is a mobile web application that helps you make informed decisions about what to eat when dining out.  Data provided by a web server back-end, and front-end clients available for standard web browsers, and specific clients for Android and iPhone.
